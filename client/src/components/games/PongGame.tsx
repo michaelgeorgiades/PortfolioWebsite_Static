@@ -27,8 +27,8 @@ export default function PongGame() {
   const gameLoopRef = useRef<number | null>(null);
   const keysRef = useRef<Set<string>>(new Set());
 
-  const CANVAS_WIDTH = 600;
-  const CANVAS_HEIGHT = 400;
+  const CANVAS_WIDTH = 580;
+  const CANVAS_HEIGHT = 380;
   const PADDLE_WIDTH = 10;
   const PADDLE_HEIGHT = 60;
   const BALL_SIZE = 8;
