@@ -24,225 +24,213 @@ export default function Navigation() {
   return (
     <>
       {/* Enhanced Moving Dots Background Animation */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        {/* Horizontal dots - more frequent and varied */}
-        <div className="absolute w-3 h-3 rounded-full animate-circuit-flow" style={{
-          backgroundColor: '#B87333',
-          top: '10%', 
-          animationDelay: '0s',
-          boxShadow: '0 0 6px #B87333'
-        }}></div>
-        <div className="absolute w-2 h-2 rounded-full animate-circuit-flow" style={{
-          backgroundColor: '#D4A574',
-          top: '15%', 
-          animationDelay: '1s',
-          boxShadow: '0 0 4px #D4A574'
-        }}></div>
-        <div className="absolute w-4 h-4 rounded-full animate-circuit-flow" style={{
-          backgroundColor: '#B87333',
-          top: '20%', 
-          animationDelay: '2s',
-          boxShadow: '0 0 8px #B87333'
-        }}></div>
-        <div className="absolute w-3 h-3 rounded-full animate-circuit-flow" style={{
-          backgroundColor: '#D4A574',
-          top: '25%', 
-          animationDelay: '3s',
-          boxShadow: '0 0 6px #D4A574'
-        }}></div>
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0" style={{
+        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+        left: '0',
+        right: '0',
+        top: '0',
+        bottom: '0'
+      }}>
+        {/* Horizontal dots - random timing and positions */}
         <div className="absolute w-2 h-2 rounded-full animate-circuit-flow" style={{
           backgroundColor: '#B87333',
-          top: '30%', 
-          animationDelay: '4s',
+          top: '12%', 
+          animationDelay: '0.3s',
+          boxShadow: '0 0 3px #B87333'
+        }}></div>
+        <div className="absolute w-1.5 h-1.5 rounded-full animate-circuit-flow" style={{
+          backgroundColor: '#D4A574',
+          top: '27%', 
+          animationDelay: '2.7s',
+          boxShadow: '0 0 2px #D4A574'
+        }}></div>
+        <div className="absolute w-2.5 h-2.5 rounded-full animate-circuit-flow" style={{
+          backgroundColor: '#B87333',
+          top: '8%', 
+          animationDelay: '5.1s',
           boxShadow: '0 0 4px #B87333'
         }}></div>
-        <div className="absolute w-4 h-4 rounded-full animate-circuit-flow" style={{
+        <div className="absolute w-2 h-2 rounded-full animate-circuit-flow" style={{
           backgroundColor: '#D4A574',
-          top: '35%', 
-          animationDelay: '5s',
-          boxShadow: '0 0 8px #D4A574'
+          top: '43%', 
+          animationDelay: '1.8s',
+          boxShadow: '0 0 3px #D4A574'
         }}></div>
-        <div className="absolute w-3 h-3 rounded-full animate-circuit-flow" style={{
+        <div className="absolute w-1.5 h-1.5 rounded-full animate-circuit-flow" style={{
           backgroundColor: '#B87333',
-          top: '40%', 
-          animationDelay: '6s',
-          boxShadow: '0 0 6px #B87333'
+          top: '61%', 
+          animationDelay: '7.2s',
+          boxShadow: '0 0 2px #B87333'
+        }}></div>
+        <div className="absolute w-2.5 h-2.5 rounded-full animate-circuit-flow" style={{
+          backgroundColor: '#D4A574',
+          top: '76%', 
+          animationDelay: '0.9s',
+          boxShadow: '0 0 4px #D4A574'
+        }}></div>
+        <div className="absolute w-2 h-2 rounded-full animate-circuit-flow" style={{
+          backgroundColor: '#B87333',
+          top: '34%', 
+          animationDelay: '4.3s',
+          boxShadow: '0 0 3px #B87333'
+        }}></div>
+        <div className="absolute w-1.5 h-1.5 rounded-full animate-circuit-flow" style={{
+          backgroundColor: '#D4A574',
+          top: '89%', 
+          animationDelay: '6.8s',
+          boxShadow: '0 0 2px #D4A574'
+        }}></div>
+        <div className="absolute w-2.5 h-2.5 rounded-full animate-circuit-flow" style={{
+          backgroundColor: '#B87333',
+          top: '51%', 
+          animationDelay: '3.4s',
+          boxShadow: '0 0 4px #B87333'
         }}></div>
         <div className="absolute w-2 h-2 rounded-full animate-circuit-flow" style={{
           backgroundColor: '#D4A574',
-          top: '45%', 
-          animationDelay: '7s',
+          top: '18%', 
+          animationDelay: '8.6s',
+          boxShadow: '0 0 3px #D4A574'
+        }}></div>
+        <div className="absolute w-1.5 h-1.5 rounded-full animate-circuit-flow" style={{
+          backgroundColor: '#B87333',
+          top: '67%', 
+          animationDelay: '2.1s',
+          boxShadow: '0 0 2px #B87333'
+        }}></div>
+        <div className="absolute w-2.5 h-2.5 rounded-full animate-circuit-flow" style={{
+          backgroundColor: '#D4A574',
+          top: '82%', 
+          animationDelay: '5.7s',
           boxShadow: '0 0 4px #D4A574'
         }}></div>
-        <div className="absolute w-4 h-4 rounded-full animate-circuit-flow" style={{
+        <div className="absolute w-2 h-2 rounded-full animate-circuit-flow" style={{
           backgroundColor: '#B87333',
-          top: '50%', 
-          animationDelay: '8s',
-          boxShadow: '0 0 8px #B87333'
+          top: '39%', 
+          animationDelay: '1.2s',
+          boxShadow: '0 0 3px #B87333'
         }}></div>
-        <div className="absolute w-3 h-3 rounded-full animate-circuit-flow" style={{
+        <div className="absolute w-1.5 h-1.5 rounded-full animate-circuit-flow" style={{
           backgroundColor: '#D4A574',
+          top: '23%', 
+          animationDelay: '7.9s',
+          boxShadow: '0 0 2px #D4A574'
+        }}></div>
+        <div className="absolute w-2.5 h-2.5 rounded-full animate-circuit-flow" style={{
+          backgroundColor: '#B87333',
           top: '55%', 
-          animationDelay: '9s',
-          boxShadow: '0 0 6px #D4A574'
-        }}></div>
-        <div className="absolute w-2 h-2 rounded-full animate-circuit-flow" style={{
-          backgroundColor: '#B87333',
-          top: '60%', 
-          animationDelay: '10s',
-          boxShadow: '0 0 4px #B87333'
-        }}></div>
-        <div className="absolute w-4 h-4 rounded-full animate-circuit-flow" style={{
-          backgroundColor: '#D4A574',
-          top: '65%', 
-          animationDelay: '11s',
-          boxShadow: '0 0 8px #D4A574'
-        }}></div>
-        <div className="absolute w-3 h-3 rounded-full animate-circuit-flow" style={{
-          backgroundColor: '#B87333',
-          top: '70%', 
-          animationDelay: '0.5s',
-          boxShadow: '0 0 6px #B87333'
-        }}></div>
-        <div className="absolute w-2 h-2 rounded-full animate-circuit-flow" style={{
-          backgroundColor: '#D4A574',
-          top: '75%', 
-          animationDelay: '1.5s',
-          boxShadow: '0 0 4px #D4A574'
-        }}></div>
-        <div className="absolute w-4 h-4 rounded-full animate-circuit-flow" style={{
-          backgroundColor: '#B87333',
-          top: '80%', 
-          animationDelay: '2.5s',
-          boxShadow: '0 0 8px #B87333'
-        }}></div>
-        <div className="absolute w-3 h-3 rounded-full animate-circuit-flow" style={{
-          backgroundColor: '#D4A574',
-          top: '85%', 
-          animationDelay: '3.5s',
-          boxShadow: '0 0 6px #D4A574'
-        }}></div>
-        <div className="absolute w-2 h-2 rounded-full animate-circuit-flow" style={{
-          backgroundColor: '#B87333',
-          top: '90%', 
-          animationDelay: '4.5s',
+          animationDelay: '4.8s',
           boxShadow: '0 0 4px #B87333'
         }}></div>
         
-        {/* Vertical dots - more frequent and varied */}
-        <div className="absolute w-3 h-3 rounded-full animate-circuit-flow-vertical" style={{
-          backgroundColor: '#B87333',
-          left: '5%', 
-          animationDelay: '0s',
-          boxShadow: '0 0 6px #B87333'
-        }}></div>
-        <div className="absolute w-2 h-2 rounded-full animate-circuit-flow-vertical" style={{
-          backgroundColor: '#D4A574',
-          left: '10%', 
-          animationDelay: '1s',
-          boxShadow: '0 0 4px #D4A574'
-        }}></div>
-        <div className="absolute w-4 h-4 rounded-full animate-circuit-flow-vertical" style={{
-          backgroundColor: '#B87333',
-          left: '15%', 
-          animationDelay: '2s',
-          boxShadow: '0 0 8px #B87333'
-        }}></div>
-        <div className="absolute w-3 h-3 rounded-full animate-circuit-flow-vertical" style={{
-          backgroundColor: '#D4A574',
-          left: '20%', 
-          animationDelay: '3s',
-          boxShadow: '0 0 6px #D4A574'
-        }}></div>
+        {/* Vertical dots - random timing and positions */}
         <div className="absolute w-2 h-2 rounded-full animate-circuit-flow-vertical" style={{
           backgroundColor: '#B87333',
-          left: '25%', 
-          animationDelay: '4s',
+          left: '8%', 
+          animationDelay: '1.4s',
+          boxShadow: '0 0 3px #B87333'
+        }}></div>
+        <div className="absolute w-1.5 h-1.5 rounded-full animate-circuit-flow-vertical" style={{
+          backgroundColor: '#D4A574',
+          left: '23%', 
+          animationDelay: '6.2s',
+          boxShadow: '0 0 2px #D4A574'
+        }}></div>
+        <div className="absolute w-2.5 h-2.5 rounded-full animate-circuit-flow-vertical" style={{
+          backgroundColor: '#B87333',
+          left: '37%', 
+          animationDelay: '3.8s',
           boxShadow: '0 0 4px #B87333'
         }}></div>
-        <div className="absolute w-4 h-4 rounded-full animate-circuit-flow-vertical" style={{
-          backgroundColor: '#D4A574',
-          left: '30%', 
-          animationDelay: '5s',
-          boxShadow: '0 0 8px #D4A574'
-        }}></div>
-        <div className="absolute w-3 h-3 rounded-full animate-circuit-flow-vertical" style={{
-          backgroundColor: '#B87333',
-          left: '35%', 
-          animationDelay: '6s',
-          boxShadow: '0 0 6px #B87333'
-        }}></div>
         <div className="absolute w-2 h-2 rounded-full animate-circuit-flow-vertical" style={{
           backgroundColor: '#D4A574',
-          left: '40%', 
-          animationDelay: '7s',
+          left: '52%', 
+          animationDelay: '8.1s',
+          boxShadow: '0 0 3px #D4A574'
+        }}></div>
+        <div className="absolute w-1.5 h-1.5 rounded-full animate-circuit-flow-vertical" style={{
+          backgroundColor: '#B87333',
+          left: '67%', 
+          animationDelay: '2.6s',
+          boxShadow: '0 0 2px #B87333'
+        }}></div>
+        <div className="absolute w-2.5 h-2.5 rounded-full animate-circuit-flow-vertical" style={{
+          backgroundColor: '#D4A574',
+          left: '81%', 
+          animationDelay: '5.3s',
           boxShadow: '0 0 4px #D4A574'
         }}></div>
-        <div className="absolute w-4 h-4 rounded-full animate-circuit-flow-vertical" style={{
-          backgroundColor: '#B87333',
-          left: '45%', 
-          animationDelay: '8s',
-          boxShadow: '0 0 8px #B87333'
-        }}></div>
-        <div className="absolute w-3 h-3 rounded-full animate-circuit-flow-vertical" style={{
-          backgroundColor: '#D4A574',
-          left: '50%', 
-          animationDelay: '9s',
-          boxShadow: '0 0 6px #D4A574'
-        }}></div>
         <div className="absolute w-2 h-2 rounded-full animate-circuit-flow-vertical" style={{
           backgroundColor: '#B87333',
-          left: '55%', 
-          animationDelay: '10s',
+          left: '14%', 
+          animationDelay: '7.5s',
+          boxShadow: '0 0 3px #B87333'
+        }}></div>
+        <div className="absolute w-1.5 h-1.5 rounded-full animate-circuit-flow-vertical" style={{
+          backgroundColor: '#D4A574',
+          left: '29%', 
+          animationDelay: '1.7s',
+          boxShadow: '0 0 2px #D4A574'
+        }}></div>
+        <div className="absolute w-2.5 h-2.5 rounded-full animate-circuit-flow-vertical" style={{
+          backgroundColor: '#B87333',
+          left: '43%', 
+          animationDelay: '4.9s',
           boxShadow: '0 0 4px #B87333'
         }}></div>
-        <div className="absolute w-4 h-4 rounded-full animate-circuit-flow-vertical" style={{
-          backgroundColor: '#D4A574',
-          left: '60%', 
-          animationDelay: '11s',
-          boxShadow: '0 0 8px #D4A574'
-        }}></div>
-        <div className="absolute w-3 h-3 rounded-full animate-circuit-flow-vertical" style={{
-          backgroundColor: '#B87333',
-          left: '65%', 
-          animationDelay: '0.5s',
-          boxShadow: '0 0 6px #B87333'
-        }}></div>
         <div className="absolute w-2 h-2 rounded-full animate-circuit-flow-vertical" style={{
           backgroundColor: '#D4A574',
-          left: '70%', 
-          animationDelay: '1.5s',
+          left: '58%', 
+          animationDelay: '6.7s',
+          boxShadow: '0 0 3px #D4A574'
+        }}></div>
+        <div className="absolute w-1.5 h-1.5 rounded-full animate-circuit-flow-vertical" style={{
+          backgroundColor: '#B87333',
+          left: '73%', 
+          animationDelay: '0.8s',
+          boxShadow: '0 0 2px #B87333'
+        }}></div>
+        <div className="absolute w-2.5 h-2.5 rounded-full animate-circuit-flow-vertical" style={{
+          backgroundColor: '#D4A574',
+          left: '87%', 
+          animationDelay: '3.2s',
           boxShadow: '0 0 4px #D4A574'
         }}></div>
-        <div className="absolute w-4 h-4 rounded-full animate-circuit-flow-vertical" style={{
-          backgroundColor: '#B87333',
-          left: '75%', 
-          animationDelay: '2.5s',
-          boxShadow: '0 0 8px #B87333'
-        }}></div>
-        <div className="absolute w-3 h-3 rounded-full animate-circuit-flow-vertical" style={{
-          backgroundColor: '#D4A574',
-          left: '80%', 
-          animationDelay: '3.5s',
-          boxShadow: '0 0 6px #D4A574'
-        }}></div>
         <div className="absolute w-2 h-2 rounded-full animate-circuit-flow-vertical" style={{
           backgroundColor: '#B87333',
-          left: '85%', 
-          animationDelay: '4.5s',
+          left: '19%', 
+          animationDelay: '8.4s',
+          boxShadow: '0 0 3px #B87333'
+        }}></div>
+        <div className="absolute w-1.5 h-1.5 rounded-full animate-circuit-flow-vertical" style={{
+          backgroundColor: '#D4A574',
+          left: '34%', 
+          animationDelay: '2.3s',
+          boxShadow: '0 0 2px #D4A574'
+        }}></div>
+        <div className="absolute w-2.5 h-2.5 rounded-full animate-circuit-flow-vertical" style={{
+          backgroundColor: '#B87333',
+          left: '48%', 
+          animationDelay: '5.8s',
           boxShadow: '0 0 4px #B87333'
         }}></div>
-        <div className="absolute w-4 h-4 rounded-full animate-circuit-flow-vertical" style={{
+        <div className="absolute w-2 h-2 rounded-full animate-circuit-flow-vertical" style={{
           backgroundColor: '#D4A574',
-          left: '90%', 
-          animationDelay: '5.5s',
-          boxShadow: '0 0 8px #D4A574'
+          left: '63%', 
+          animationDelay: '1.1s',
+          boxShadow: '0 0 3px #D4A574'
         }}></div>
-        <div className="absolute w-3 h-3 rounded-full animate-circuit-flow-vertical" style={{
+        <div className="absolute w-1.5 h-1.5 rounded-full animate-circuit-flow-vertical" style={{
           backgroundColor: '#B87333',
-          left: '95%', 
-          animationDelay: '6.5s',
-          boxShadow: '0 0 6px #B87333'
+          left: '78%', 
+          animationDelay: '7.3s',
+          boxShadow: '0 0 2px #B87333'
+        }}></div>
+        <div className="absolute w-2.5 h-2.5 rounded-full animate-circuit-flow-vertical" style={{
+          backgroundColor: '#D4A574',
+          left: '92%', 
+          animationDelay: '4.1s',
+          boxShadow: '0 0 4px #D4A574'
         }}></div>
       </div>
 
