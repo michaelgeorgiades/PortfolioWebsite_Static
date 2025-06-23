@@ -61,6 +61,11 @@ export default {
           border: "var(--sidebar-border)",
           ring: "var(--sidebar-ring)",
         },
+        copper: {
+          DEFAULT: "hsl(28, 54%, 45%)",
+          light: "hsl(28, 54%, 65%)",
+          dark: "hsl(28, 54%, 25%)",
+        },
       },
       keyframes: {
         "accordion-down": {

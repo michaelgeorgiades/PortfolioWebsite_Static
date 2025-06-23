@@ -115,13 +115,37 @@
   }
 
   @keyframes circuit-flow {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(200vw); }
+    0% { 
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+    5% {
+      opacity: 1;
+    }
+    95% {
+      opacity: 1;
+    }
+    100% { 
+      transform: translateX(calc(100vw + 50px));
+      opacity: 0;
+    }
   }
 
   @keyframes circuit-flow-vertical {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(200vh); }
+    0% { 
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+    5% {
+      opacity: 1;
+    }
+    95% {
+      opacity: 1;
+    }
+    100% { 
+      transform: translateY(calc(100vh + 50px));
+      opacity: 0;
+    }
   }
 
   .animate-pulse-copper {
@@ -129,10 +153,10 @@
   }
 
   .animate-circuit-flow {
-    animation: circuit-flow 4s linear infinite;
+    animation: circuit-flow 12s linear infinite;
   }
 
   .animate-circuit-flow-vertical {
-    animation: circuit-flow-vertical 5s linear infinite;
+    animation: circuit-flow-vertical 15s linear infinite;
   }
 }
