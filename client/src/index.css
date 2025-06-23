@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(28, 54%, 45%);
+  --primary-foreground: hsl(60, 9.1%, 97.8%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  
+  /* Custom copper theme colors */
+  --copper: hsl(28, 54%, 45%);
+  --copper-light: hsl(28, 54%, 65%);
+  --copper-dark: hsl(28, 54%, 25%);
+  --dark-primary: hsl(0, 0%, 6%);
+  --dark-secondary: hsl(0, 0%, 10%);
+}
+
+.dark {
+  --background: hsl(0, 0%, 6%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(0, 0%, 10%);
+  --muted-foreground: hsl(0, 0%, 64.9%);
+  --popover: hsl(0, 0%, 6%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(0, 0%, 6%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(0, 0%, 14.9%);
+  --input: hsl(0, 0%, 14.9%);
+  --primary: hsl(28, 54%, 45%);
+  --primary-foreground: hsl(60, 9.1%, 97.8%);
+  --secondary: hsl(0, 0%, 10%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(0, 0%, 10%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(0, 0%, 83.9%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased text-gray-100 overflow-x-hidden;
+    background-color: hsl(0, 0%, 6%);
+    font-family: 'Inter', sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .circuit-bg {
+    background-image: 
+      linear-gradient(90deg, rgba(184, 115, 51, 0.1) 1px, transparent 1px),
+      linear-gradient(rgba(184, 115, 51, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .copper-gradient {
+    background: linear-gradient(135deg, hsl(28, 54%, 45%) 0%, hsl(28, 54%, 65%) 100%);
+  }
+
+  .glass-effect {
+    backdrop-filter: blur(10px);
+    background: rgba(26, 26, 26, 0.8);
+    border: 1px solid rgba(184, 115, 51, 0.2);
+  }
+
+  .nav-link {
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: hsl(28, 54%, 45%);
+    animation: slideIn 0.3s ease;
+  }
+
+  @keyframes slideIn {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  @keyframes pulse-copper {
+    0% { opacity: 0.6; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes circuit-flow {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200vw); }
+  }
+
+  .animate-pulse-copper {
+    animation: pulse-copper 2s ease-in-out infinite alternate;
+  }
+
+  .animate-circuit-flow {
+    animation: circuit-flow 3s linear infinite;
+  }
+}
