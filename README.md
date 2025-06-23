@@ -1,133 +1,143 @@
-# Michael Georgiades - Personal Portfolio Website
+# Michael Georgiades - Portfolio Website
 
-A modern personal portfolio website featuring a dark copper/circuit theme with responsive design.
+A modern personal portfolio website featuring a dark copper aesthetic with animated background elements. Built with React, TypeScript, Express, and includes photography gallery with PayPal integration and browser games.
 
 ## Features
 
-- **Home Page**: Introduction with custom circuit board design around profile photo
-- **Resume Page**: Professional experience, skills, and certifications
-- **Photography Gallery**: Interactive gallery with PayPal purchase integration
-- **Games Page**: Playable browser games (Snake and Tetris)
-- **Contact Page**: Contact form with backend handling
+- **Multi-page Design**: Home, Resume, Photography, Games, and Contact pages
+- **Photography Gallery**: High-quality images with PayPal purchasing integration
+- **Browser Games**: Snake, Tetris, Pong, and Breakout games
+- **Contact Form**: Functional contact form with backend handling
+- **Responsive Design**: Mobile-friendly with dark copper theme
+- **Animated Background**: Moving copper dots for visual appeal
 
 ## Tech Stack
 
 - **Frontend**: React, TypeScript, Tailwind CSS, Vite
-- **Backend**: Node.js, Express, TypeScript
-- **UI Components**: Radix UI, shadcn/ui
-- **State Management**: TanStack Query
-- **Payments**: PayPal SDK
-- **Storage**: In-memory storage (easily replaceable with database)
+- **Backend**: Express.js, Node.js
+- **Database**: PostgreSQL with Drizzle ORM
+- **Payments**: PayPal SDK integration
+- **Styling**: shadcn/ui components, Tailwind CSS
+- **Deployment**: Ready for Railway, Vercel, or Render
 
-## Setup Instructions
+## Local Development
 
 ### Prerequisites
-- Node.js 20 or higher
-- PayPal Developer Account (for payment functionality)
+- Node.js 18+ or 20+
+- npm
 
-### Installation
+### Setup
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd portfolio-website
+   ```
 
-1. **Clone and Install Dependencies**
+2. Install dependencies:
    ```bash
    npm install
    ```
 
-2. **Configure PayPal (Optional)**
-   - Visit [PayPal Developer](https://developer.paypal.com)
-   - Create a developer account and new app
-   - Add your PayPal credentials as secrets in Replit:
-     - `PAYPAL_CLIENT_ID`
-     - `PAYPAL_CLIENT_SECRET`
+3. Set up environment variables:
+   ```bash
+   cp .env.example .env
+   ```
    
-   Note: The site will work without PayPal credentials, but payment functionality will be disabled.
+   Add your environment variables:
+   ```
+   PAYPAL_CLIENT_ID=your_paypal_client_id
+   PAYPAL_CLIENT_SECRET=your_paypal_client_secret
+   DATABASE_URL=your_database_url (optional for development)
+   ```
 
-3. **Start Development Server**
+4. Start development server:
    ```bash
    npm run dev
    ```
 
-### Project Structure
+5. Open [http://localhost:5000](http://localhost:5000) in your browser
+
+## Production Deployment
+
+### Environment Variables Required
+- `PAYPAL_CLIENT_ID`: PayPal client ID for payment processing
+- `PAYPAL_CLIENT_SECRET`: PayPal client secret
+- `DATABASE_URL`: PostgreSQL connection string (if using database)
+- `NODE_ENV`: Set to "production"
+
+### Build Command
+```bash
+npm run build
+```
+
+### Start Command
+```bash
+npm start
+```
+
+### Deployment Platforms
+
+**Railway:**
+- Connect GitHub repository
+- Set environment variables in Railway dashboard
+- Deploy automatically on push to main branch
+
+**Vercel:**
+- Connect GitHub repository
+- Configure build settings: Build Command: `npm run build`, Start Command: `npm start`
+- Set environment variables in Vercel dashboard
+
+**Render:**
+- Connect GitHub repository
+- Set build command: `npm run build`
+- Set start command: `npm start`
+- Configure environment variables
+
+## GitHub Actions
+
+The repository includes a GitHub Actions workflow (`.github/workflows/deploy.yml`) that:
+- Runs on pushes to main branch
+- Installs dependencies and builds the project
+- Deploys to your chosen platform automatically
+
+Configure the deployment section in the workflow file for your preferred platform.
+
+## Project Structure
 
 ```
 ├── client/                 # Frontend React application
 │   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   │   ├── games/      # Game components (Snake, Tetris)
-│   │   │   └── ui/         # shadcn UI components
-│   │   ├── pages/          # Main pages
-│   │   ├── lib/            # Utilities and configurations
-│   │   └── hooks/          # Custom React hooks
+│   │   ├── components/     # React components
+│   │   ├── pages/          # Page components
+│   │   ├── hooks/          # Custom hooks
+│   │   └── lib/            # Utilities
 ├── server/                 # Backend Express server
-│   ├── index.ts           # Main server file
+│   ├── index.ts           # Server entry point
 │   ├── routes.ts          # API routes
 │   ├── storage.ts         # Data storage layer
 │   └── paypal.ts          # PayPal integration
 ├── shared/                 # Shared types and schemas
-└── attached_assets/        # User-provided assets
+└── attached_assets/        # Static assets
 ```
 
-### Customization
+## Key Features Details
 
-#### Adding Your Photo
-Replace the profile photo by updating the import in `client/src/pages/Home.tsx`:
-```typescript
-import aviImage from "@assets/your-photo.jpg";
-```
+### Photography Gallery
+- Browse professional photography
+- Purchase high-quality prints via PayPal
+- Responsive image gallery with modal views
 
-#### Updating Resume Content
-Edit the `workExperience` and `skillCategories` arrays in `client/src/pages/Home.tsx` to reflect your experience.
+### Browser Games
+- **Snake**: Classic snake game with score tracking
+- **Tetris**: Full Tetris implementation with line clearing
+- **Pong**: Single-player vs AI with paddle controls
+- **Breakout**: Brick-breaking game with multiple levels
 
-#### Adding Photos to Gallery
-Update the sample photos in `server/storage.ts` in the `initializePhotos()` method.
+### Contact Form
+- Functional contact form with backend validation
+- Email integration for receiving messages
+- Form validation and user feedback
 
-#### Customizing Theme
-Modify the copper color scheme in `client/src/index.css`:
-```css
---copper: hsl(28, 54%, 45%);
---copper-light: hsl(28, 54%, 65%);
---copper-dark: hsl(28, 54%, 25%);
-```
+## License
 
-### Features in Detail
-
-#### Circuit Board Design
-The homepage features a custom SVG circuit board design around the profile photo, creating a tech-focused aesthetic that complements the IT systems engineer theme.
-
-#### Games
-- **Snake**: Classic snake game with arrow key controls
-- **Tetris**: Simplified Tetris with piece rotation and line clearing
-
-#### Photography Gallery
-- Responsive grid layout
-- Hover effects and smooth transitions
-- PayPal integration for print purchases
-- Modal dialogs for purchase flow
-
-#### Contact Form
-- Form validation using Zod
-- Backend storage of messages
-- Toast notifications for user feedback
-
-### Deployment
-
-The application is configured for deployment on Replit. Simply:
-1. Ensure all environment variables are set
-2. The app will automatically deploy when ready
-
-### Development Notes
-
-- TypeScript is used throughout for type safety
-- The application uses a modern component architecture
-- State management is handled via TanStack Query
-- Styling uses Tailwind CSS with custom components
-- The backend uses Express with TypeScript for API routes
-
-### Browser Compatibility
-
-- Modern browsers (Chrome, Firefox, Safari, Edge)
-- Responsive design works on desktop, tablet, and mobile
-- Games require keyboard input (desktop/laptop recommended)
-
-### Support
-
-For issues or questions, use the contact form on the website or check the code comments for implementation details.
+Private portfolio project - All rights reserved.
