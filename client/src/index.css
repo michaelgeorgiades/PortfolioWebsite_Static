@@ -119,11 +119,20 @@
     100% { transform: translateX(200vw); }
   }
 
+  @keyframes circuit-flow-vertical {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(200vh); }
+  }
+
   .animate-pulse-copper {
     animation: pulse-copper 2s ease-in-out infinite alternate;
   }
 
   .animate-circuit-flow {
-    animation: circuit-flow 3s linear infinite;
+    animation: circuit-flow 4s linear infinite;
+  }
+
+  .animate-circuit-flow-vertical {
+    animation: circuit-flow-vertical 5s linear infinite;
   }
 }

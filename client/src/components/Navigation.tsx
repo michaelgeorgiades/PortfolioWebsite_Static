@@ -1,52 +1,50 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import { cn } from "@/lib/utils";
-import { scrollToSection } from "@/lib/utils";
 
 const navItems = [
-  { id: "home", label: "Home" },
-  { id: "resume", label: "Resume" },
-  { id: "photography", label: "Photography" },
-  { id: "games", label: "Games" },
-  { id: "contact", label: "Contact" },
+  { path: "/", label: "Home" },
+  { path: "/resume", label: "Resume" },
+  { path: "/photography", label: "Photography" },
+  { path: "/games", label: "Games" },
+  { path: "/contact", label: "Contact" },
 ];
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+  const [location, setLocation] = useLocation();
 
-  const handleNavClick = (sectionId: string) => {
-    scrollToSection(sectionId);
+  const handleNavClick = (path: string) => {
+    setLocation(path);
     setIsMenuOpen(false);
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = navItems.map(item => item.id);
-      const scrollY = window.scrollY;
-      
-      for (const sectionId of sections) {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollY >= offsetTop - 100 && scrollY < offsetTop + offsetHeight - 100) {
-            setActiveSection(sectionId);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // No scroll detection needed for page-based navigation
 
   return (
     <>
-      {/* Circuit Animation Background */}
+      {/* Moving Dots Background Animation */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute w-1 h-1 bg-copper rounded-full animate-circuit-flow" style={{top: '20%', animationDelay: '0s'}}></div>
-        <div className="absolute w-1 h-1 bg-copper-light rounded-full animate-circuit-flow" style={{top: '40%', animationDelay: '1s'}}></div>
-        <div className="absolute w-1 h-1 bg-copper rounded-full animate-circuit-flow" style={{top: '60%', animationDelay: '2s'}}></div>
+        {/* Horizontal dots */}
+        <div className="absolute w-2 h-2 bg-copper rounded-full animate-circuit-flow opacity-60" style={{top: '15%', animationDelay: '0s'}}></div>
+        <div className="absolute w-2 h-2 bg-copper-light rounded-full animate-circuit-flow opacity-70" style={{top: '25%', animationDelay: '1s'}}></div>
+        <div className="absolute w-2 h-2 bg-copper rounded-full animate-circuit-flow opacity-50" style={{top: '35%', animationDelay: '2s'}}></div>
+        <div className="absolute w-2 h-2 bg-copper-light rounded-full animate-circuit-flow opacity-80" style={{top: '45%', animationDelay: '3s'}}></div>
+        <div className="absolute w-2 h-2 bg-copper rounded-full animate-circuit-flow opacity-60" style={{top: '55%', animationDelay: '4s'}}></div>
+        <div className="absolute w-2 h-2 bg-copper-light rounded-full animate-circuit-flow opacity-70" style={{top: '65%', animationDelay: '5s'}}></div>
+        <div className="absolute w-2 h-2 bg-copper rounded-full animate-circuit-flow opacity-50" style={{top: '75%', animationDelay: '6s'}}></div>
+        <div className="absolute w-2 h-2 bg-copper-light rounded-full animate-circuit-flow opacity-80" style={{top: '85%', animationDelay: '7s'}}></div>
+        
+        {/* Vertical dots */}
+        <div className="absolute w-2 h-2 bg-copper rounded-full animate-circuit-flow-vertical opacity-60" style={{left: '10%', animationDelay: '0.5s'}}></div>
+        <div className="absolute w-2 h-2 bg-copper-light rounded-full animate-circuit-flow-vertical opacity-70" style={{left: '20%', animationDelay: '1.5s'}}></div>
+        <div className="absolute w-2 h-2 bg-copper rounded-full animate-circuit-flow-vertical opacity-50" style={{left: '30%', animationDelay: '2.5s'}}></div>
+        <div className="absolute w-2 h-2 bg-copper-light rounded-full animate-circuit-flow-vertical opacity-80" style={{left: '40%', animationDelay: '3.5s'}}></div>
+        <div className="absolute w-2 h-2 bg-copper rounded-full animate-circuit-flow-vertical opacity-60" style={{left: '50%', animationDelay: '4.5s'}}></div>
+        <div className="absolute w-2 h-2 bg-copper-light rounded-full animate-circuit-flow-vertical opacity-70" style={{left: '60%', animationDelay: '5.5s'}}></div>
+        <div className="absolute w-2 h-2 bg-copper rounded-full animate-circuit-flow-vertical opacity-50" style={{left: '70%', animationDelay: '6.5s'}}></div>
+        <div className="absolute w-2 h-2 bg-copper-light rounded-full animate-circuit-flow-vertical opacity-80" style={{left: '80%', animationDelay: '7.5s'}}></div>
+        <div className="absolute w-2 h-2 bg-copper rounded-full animate-circuit-flow-vertical opacity-60" style={{left: '90%', animationDelay: '8.5s'}}></div>
       </div>
 
       <nav className="fixed top-0 w-full z-50 glass-effect">
@@ -61,11 +59,11 @@ export default function Navigation() {
             <div className="hidden md:flex space-x-8">
               {navItems.map((item) => (
                 <button
-                  key={item.id}
-                  onClick={() => handleNavClick(item.id)}
+                  key={item.path}
+                  onClick={() => handleNavClick(item.path)}
                   className={cn(
                     "nav-link text-gray-300 hover:text-copper transition-colors duration-300",
-                    activeSection === item.id && "text-copper"
+                    location === item.path && "text-copper"
                   )}
                 >
                   {item.label}
@@ -85,17 +83,17 @@ export default function Navigation() {
 
         {/* Mobile Navigation */}
         <div className={cn(
-          "md:hidden bg-dark-secondary border-t border-copper-dark transition-all duration-300",
+          "md:hidden border-t border-copper-dark transition-all duration-300",
           isMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
-        )}>
+        )} style={{backgroundColor: 'hsl(0, 0%, 10%)'}}>
           <div className="px-4 py-2 space-y-2">
             {navItems.map((item) => (
               <button
-                key={item.id}
-                onClick={() => handleNavClick(item.id)}
+                key={item.path}
+                onClick={() => handleNavClick(item.path)}
                 className={cn(
                   "block w-full text-left py-2 text-gray-300 hover:text-copper transition-colors",
-                  activeSection === item.id && "text-copper"
+                  location === item.path && "text-copper"
                 )}
               >
                 {item.label}
