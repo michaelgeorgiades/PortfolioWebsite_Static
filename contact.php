@@ -2,7 +2,7 @@
 // contact.php
 
 // 1. CONFIGURATION
-$recaptchaSecret = '6LftVHArAAAAAIz-CCxU-rfJrNVjVyLDSnkqAjrn'; // Get this from https://www.google.com/recaptcha/admin
+$recaptchaSecret = '6LfwV3ArAAAAAPqK3zwG3avaS963lEZ3z-S_tRzC'; // Get this from https://www.google.com/recaptcha/admin
 $recipientEmail = 'me@michaelgeorgiades.co.za';
 
 // 2. VERIFY reCAPTCHA
