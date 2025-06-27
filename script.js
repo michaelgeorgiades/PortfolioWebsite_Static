@@ -982,8 +982,15 @@ function initializeModal() {
     });
     
     purchaseBtn.addEventListener('click', () => {
-        showToast('PayPal integration would be implemented here');
-    });
+    const title = document.getElementById('modalTitle').textContent;
+    const price = parseFloat(document.getElementById('modalPrice').textContent.replace('$', ''));
+    const paypalUrl = `https://www.paypal.com/paypalme/michaelgeorgiades1/${price}`;
+    
+    // Optionally include note param
+    // const url = `${paypalUrl}?note=${encodeURIComponent(title)}`;
+    
+    window.open(paypalUrl, '_blank');
+});
 }
 
 function openPhotoModal(photoId) {
@@ -1014,21 +1021,28 @@ function closePhotoModal() {
 function initializeContactForm() {
     const form = document.getElementById('contactForm');
     
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const formData = new FormData(form);
-        const data = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            subject: formData.get('subject'),
-            message: formData.get('message')
-        };
-        
-        // Simulate form submission
-        showToast('Message sent successfully!');
-        form.reset();
-    });
+    form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const recaptchaResponse = grecaptcha.getResponse();
+    if (!recaptchaResponse) {
+        showToast("Please complete the reCAPTCHA.");
+        return;
+    }
+
+    const formData = new FormData(form);
+    const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        subject: formData.get('subject'),
+        message: formData.get('message')
+    };
+
+    // Simulate form handling
+    showToast('Message sent successfully!');
+    form.reset();
+    grecaptcha.reset();
+});
 }
 
 // Toast notification
