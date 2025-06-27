@@ -1,59 +1,26 @@
-name: Deploy to Production
+name: Deploy to KonsoleH
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-        cache: 'npm'
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Build application
-      run: npm run build
-
-    - name: Run tests (if any)
-      run: npm test --if-present
-
-    # Deploy to your chosen platform
-    # Example for Railway:
-    - name: Deploy to Railway
-      if: github.ref == 'refs/heads/main'
-      uses: railway-app/railway-action@v1
-      with:
-        command: "railway up"
-      env:
-        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-
-    # Example for Vercel:
-    # - name: Deploy to Vercel
-    #   if: github.ref == 'refs/heads/main'
-    #   uses: amondnet/vercel-action@v25
-    #   with:
-    #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
-    #     vercel-org-id: ${{ secrets.ORG_ID }}
-    #     vercel-project-id: ${{ secrets.PROJECT_ID }}
-
-    # Example for Render:
-    # - name: Deploy to Render
-    #   if: github.ref == 'refs/heads/main'
-    #   run: |
-    #     curl -X POST \
-    #       -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-    #       -H "Content-Type: application/json" \
-    #       -d '{"serviceId": "${{ secrets.RENDER_SERVICE_ID }}"}' \
-    #       https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
+      - name: Deploy via rsync
+        run: |
+          rsync -avz --delete ./ \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/public_html/
