@@ -1,4 +1,4 @@
-name: FTP Deploy to KonsoleH
+name: SFTP Deploy to KonsoleH
 
 on:
   push:
@@ -6,16 +6,22 @@ on:
       - main
 
 jobs:
-  ftp-deploy:
+  sftp-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy to FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: Deploy via SFTP
+        uses: pressidium/lftp-mirror-action@v1
         with:
-          server: ftp.your-domain.co.za
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ~/public_html/
+          host: ${{ secrets.SFTP_HOST }}
+          user: ${{ secrets.SFTP_USERNAME }}
+          pass: ${{ secrets.SFTP_PASSWORD }}
+          # Local folder to upload
+          localDir: ./
+          # Remote path. double-check this!
+          remoteDir: public_html/
+          # Optional flags
+          options: --reverse --delete --verbose
