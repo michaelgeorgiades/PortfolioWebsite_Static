@@ -242,7 +242,8 @@ function initializeSnakeGame() {
     
     // Controls
     function handleKeyPress(e) {
-        if (!gameState.gameRunning) return;
+    const tag = e.target.tagName.toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
         
         const key = e.key;
         if (keysPressed.has(key)) return;
@@ -489,7 +490,8 @@ function initializeTetrisGame() {
     
     // Controls
     function handleKeyPress(e) {
-        if (!gameState.gameRunning || !gameState.currentPiece) return;
+    const tag = e.target.tagName.toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
         
         e.preventDefault();
         const piece = gameState.currentPiece;
