@@ -200,41 +200,62 @@ export default function TetrisGame() {
     }
   };
 
+  const rotatePiece = (piece: TetrisPiece): number[][] => {
+    const shape = piece.shape;
+    const rows = shape.length;
+    const cols = shape[0].length;
+    const rotated: number[][] = [];
+    
+    for (let i = 0; i < cols; i++) {
+      rotated[i] = [];
+      for (let j = 0; j < rows; j++) {
+        rotated[i][j] = shape[rows - 1 - j][i];
+      }
+    }
+    
+    return rotated;
+  };
+
   const handleKeyPress = (e: KeyboardEvent) => {
     if (!gameRunning || !gameStateRef.current.currentPiece) return;
 
+    e.preventDefault();
     const { currentPiece } = gameStateRef.current;
     
     switch(e.key) {
       case 'ArrowLeft':
+      case 'a':
+      case 'A':
         if (isValidPosition(currentPiece, -1, 0)) {
           currentPiece.x--;
           draw();
         }
         break;
       case 'ArrowRight':
+      case 'd':
+      case 'D':
         if (isValidPosition(currentPiece, 1, 0)) {
           currentPiece.x++;
           draw();
         }
         break;
       case 'ArrowDown':
+      case 's':
+      case 'S':
         if (isValidPosition(currentPiece, 0, 1)) {
           currentPiece.y++;
           draw();
         }
         break;
       case 'ArrowUp':
-        // Rotate piece (simple 90-degree rotation)
-        if (currentPiece.shape && currentPiece.shape[0]) {
-          const rotated = currentPiece.shape[0].map((_, index) =>
-            currentPiece.shape.map(row => row[index]).reverse()
-          );
-          const rotatedPiece = { ...currentPiece, shape: rotated };
-          if (isValidPosition(rotatedPiece)) {
-            currentPiece.shape = rotated;
-            draw();
-          }
+      case 'w':
+      case 'W':
+      case ' ': // Space bar for rotation
+        const rotatedShape = rotatePiece(currentPiece);
+        const rotatedPiece = { ...currentPiece, shape: rotatedShape };
+        if (isValidPosition(rotatedPiece)) {
+          currentPiece.shape = rotatedShape;
+          draw();
         }
         break;
     }
@@ -281,7 +302,7 @@ export default function TetrisGame() {
           {gameRunning ? 'Stop Game' : 'Start Game'}
         </Button>
         <div className="text-xs text-gray-400 mt-2">
-          Use arrow keys to play: ← → ↓ for movement, ↑ to rotate
+          Use arrow keys or WASD to play: ← → ↓ for movement, ↑/Space to rotate
         </div>
       </div>
     </div>

@@ -168,10 +168,12 @@ export default function BreakoutGame() {
     if (!gameState) return;
 
     // Move paddle
-    if (keysRef.current.has('ArrowLeft') && gameState.paddle.x > 0) {
+    if ((keysRef.current.has('ArrowLeft') || keysRef.current.has('a') || keysRef.current.has('A')) && 
+        gameState.paddle.x > 0) {
       gameState.paddle.x -= PADDLE_SPEED;
     }
-    if (keysRef.current.has('ArrowRight') && gameState.paddle.x < CANVAS_WIDTH - gameState.paddle.width) {
+    if ((keysRef.current.has('ArrowRight') || keysRef.current.has('d') || keysRef.current.has('D')) && 
+        gameState.paddle.x < CANVAS_WIDTH - gameState.paddle.width) {
       gameState.paddle.x += PADDLE_SPEED;
     }
 
@@ -259,7 +261,7 @@ export default function BreakoutGame() {
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (['ArrowLeft', 'ArrowRight'].includes(e.key)) {
+    if (['ArrowLeft', 'ArrowRight', 'a', 'A', 'd', 'D'].includes(e.key)) {
       e.preventDefault();
       keysRef.current.add(e.key);
     }
@@ -316,7 +318,7 @@ export default function BreakoutGame() {
           {gameRunning ? 'Stop Game' : 'Start Game'}
         </Button>
         <div className="text-xs text-gray-400 mt-2">
-          Use ← and → arrow keys to control the paddle
+          Use ← → arrow keys or A D to control the paddle
         </div>
       </div>
     </div>

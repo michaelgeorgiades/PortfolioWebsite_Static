@@ -13,7 +13,7 @@ A modern personal portfolio website featuring a dark copper aesthetic with anima
 
 ## Tech Stack
 
-- **Frontend**: React, TypeScript, Tailwind CSS, Vite
+- **Frontend**: React, TypeScript, Tailwind CSS
 - **Backend**: Express.js, Node.js
 - **Database**: PostgreSQL with Drizzle ORM
 - **Payments**: PayPal SDK integration

@@ -74,7 +74,12 @@ export default function SnakeGame() {
     // Check food collision
     if (head.x === food.x && head.y === food.y) {
       setScore(prev => prev + 10);
-      gameStateRef.current.food = getRandomPosition();
+      // Generate new food position that doesn't overlap with snake
+      let newFood: Position;
+      do {
+        newFood = getRandomPosition();
+      } while (snake.some(segment => segment.x === newFood.x && segment.y === newFood.y));
+      gameStateRef.current.food = newFood;
     } else {
       snake.pop();
     }
@@ -111,25 +116,34 @@ export default function SnakeGame() {
   const handleKeyPress = (e: KeyboardEvent) => {
     if (!gameRunning) return;
 
+    e.preventDefault();
     const { direction } = gameStateRef.current;
     
     switch(e.key) {
       case 'ArrowUp':
+      case 'w':
+      case 'W':
         if (direction.y === 0) {
           gameStateRef.current.direction = { x: 0, y: -GRID_SIZE };
         }
         break;
       case 'ArrowDown':
+      case 's':
+      case 'S':
         if (direction.y === 0) {
           gameStateRef.current.direction = { x: 0, y: GRID_SIZE };
         }
         break;
       case 'ArrowLeft':
+      case 'a':
+      case 'A':
         if (direction.x === 0) {
           gameStateRef.current.direction = { x: -GRID_SIZE, y: 0 };
         }
         break;
       case 'ArrowRight':
+      case 'd':
+      case 'D':
         if (direction.x === 0) {
           gameStateRef.current.direction = { x: GRID_SIZE, y: 0 };
         }
@@ -179,7 +193,7 @@ export default function SnakeGame() {
           {gameRunning ? 'Stop Game' : 'Start Game'}
         </Button>
         <div className="text-xs text-gray-400 mt-2">
-          Use arrow keys to control the snake
+          Use arrow keys or WASD to control the snake
         </div>
       </div>
     </div>

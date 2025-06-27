@@ -102,10 +102,12 @@ export default function PongGame() {
     if (!gameState) return;
 
     // Move player paddle
-    if (keysRef.current.has('ArrowUp') && gameState.paddles.player.y > 0) {
+    if ((keysRef.current.has('ArrowUp') || keysRef.current.has('w') || keysRef.current.has('W')) && 
+        gameState.paddles.player.y > 0) {
       gameState.paddles.player.y -= PADDLE_SPEED;
     }
-    if (keysRef.current.has('ArrowDown') && gameState.paddles.player.y < CANVAS_HEIGHT - PADDLE_HEIGHT) {
+    if ((keysRef.current.has('ArrowDown') || keysRef.current.has('s') || keysRef.current.has('S')) && 
+        gameState.paddles.player.y < CANVAS_HEIGHT - PADDLE_HEIGHT) {
       gameState.paddles.player.y += PADDLE_SPEED;
     }
 
@@ -203,7 +205,7 @@ export default function PongGame() {
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (['ArrowUp', 'ArrowDown'].includes(e.key)) {
+    if (['ArrowUp', 'ArrowDown', 'w', 'W', 's', 'S'].includes(e.key)) {
       e.preventDefault();
       keysRef.current.add(e.key);
     }
@@ -260,7 +262,7 @@ export default function PongGame() {
           {gameRunning ? 'Stop Game' : 'Start Game'}
         </Button>
         <div className="text-xs text-gray-400 mt-2">
-          Use ↑ and ↓ arrow keys to control your paddle
+          Use ↑ ↓ arrow keys or W S to control your paddle
         </div>
       </div>
     </div>
