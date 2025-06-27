@@ -111,6 +111,7 @@ This is a modern personal portfolio website built as a full-stack TypeScript app
 - **Port Configuration**: Internal port 5000 mapped to external port 80
 
 ## Changelog
+- June 27, 2025. Created complete static HTML/CSS/JavaScript version with all features
 - June 23, 2025. Initial setup
 
 ## User Preferences
