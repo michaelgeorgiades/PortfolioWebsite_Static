@@ -1031,17 +1031,26 @@ function initializeContactForm() {
     }
 
     const formData = new FormData(form);
-    const data = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        subject: formData.get('subject'),
-        message: formData.get('message')
-    };
 
-    // Simulate form handling
-    showToast('Message sent successfully!');
-    form.reset();
-    grecaptcha.reset();
+    try {
+        const response = await fetch('contact.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showToast('Message sent successfully!');
+            form.reset();
+            grecaptcha.reset();
+        } else {
+            showToast(result.error || 'Something went wrong.');
+        }
+    } catch (err) {
+        console.error(err);
+        showToast('Network error — please try again.');
+    }
 });
 }
 
