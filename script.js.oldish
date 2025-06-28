@@ -11,66 +11,35 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* --- Navigation --- */
-
 function initializeNavigation() {
     const navLinks = document.querySelectorAll(".nav-link");
     const sections = document.querySelectorAll(".section");
-    const mobileMenuBtn = document.getElementById("mobileMenuBtn");
     const mobileNav = document.getElementById("mobileNav");
 
-    function activateSection(sectionId) {
-        sections.forEach(section => {
-            section.classList.remove("active");
-            if (section.id === sectionId) section.classList.add("active");
-        });
-
-        navLinks.forEach(link => {
-            if (link.getAttribute("data-section") === sectionId) {
-                link.classList.add("active");
-            } else {
-                link.classList.remove("active");
-            }
-        });
-    }
-
     navLinks.forEach(link => {
-        link.addEventListener("click", e => {
+        link.addEventListener("click", (e) => {
             e.preventDefault();
-            const sectionId = link.getAttribute("data-section");
-            activateSection(sectionId);
+
+            // Remove .active from all nav links
+            navLinks.forEach(l => l.classList.remove("active"));
+            link.classList.add("active");
+
+            // Hide all sections and show the selected one
+            const target = link.getAttribute("data-section");
+            sections.forEach(section => {
+                section.classList.remove("active");
+                if (section.id === target) {
+                    section.classList.add("active");
+                }
+            });
+
+            // Close mobile nav if open
             mobileNav.classList.remove("show");
         });
     });
 
-    if (mobileMenuBtn && mobileNav) {
-        mobileMenuBtn.addEventListener("click", () => {
-            mobileNav.classList.toggle("show");
-        });
-    }
-
-    // Show the home section by default on load
-    activateSection("home");
-}
-
-    const navLinks = document.querySelectorAll(".nav-link");
-    const sections = document.querySelectorAll(".section");
-
-    navLinks.forEach(link => {
-        link.addEventListener("click", () => {
-            navLinks.forEach(l => l.classList.remove("active"));
-            link.classList.add("active");
-
-            const target = link.getAttribute("data-section");
-            sections.forEach(section => {
-                section.classList.remove("active");
-                if (section.id === target) section.classList.add("active");
-            });
-        });
-    });
-
+    // Handle mobile nav toggle
     const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-    const mobileNav = document.getElementById("mobileNav");
-
     mobileMenuBtn.addEventListener("click", () => {
         mobileNav.classList.toggle("show");
     });
