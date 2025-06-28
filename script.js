@@ -1,14 +1,25 @@
 // Global variables
 let currentSection = 'home';
 let isMobileMenuOpen = false;
+let gameEventListeners = {
+    snake: null,
+    tetris: null,
+    pong: null,
+    breakout: null
+};
 
 // Photo data
 const photos = [
-    { id: 1, title: "Mountain Vista", description: "A stunning mountain landscape captured during golden hour", price: 25, image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop" },
-    { id: 2, title: "Forest Path", description: "A mystical forest path leading into the unknown", price: 20, image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop" },
-    { id: 3, title: "Ocean Waves", description: "Powerful waves crashing against the rocky shore", price: 30, image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=crop" },
-    { id: 4, title: "City Lights", description: "Urban landscape illuminated by city lights at night", price: 35, image: "https://images.unsplash.com/photo-1500964757637-c85e8a162699?w=800&h=600&fit=crop" }
+    { id: 1, title: "Umhlanga Lighthouse", description: "Umhlanga Lighthouse in South Africa", price: 5, image: "./attached_assets/lighthouse.jpg" },
+    { id: 2, title: "a Vulture", description: "A Vulture in Black & White", price: 5, image: "./attached_assets/vulture.jpg" },
+    { id: 3, title: "Oxpecker on Zebra Tail", description: "An Oxpecker on a Zebra's Tail", price: 5, image: "./attached_assets/oxpeckerzebratail.jpg" },
+    { id: 4, title: "Oxpeckers on Giraffe", description: "Oxpeckers on a giraffe's back", price: 5, image: "./attached_assets/oxpeckergiraffe.jpg" },
+    { id: 5, title: "Tower Bridge in London", description: "Tower Bridge in London", price: 5, image: "./attached_assets/towerbridge.jpg" },
+    { id: 6, title: "Oxpeckers on Zebra", description: "Oxpeckers on a zebras's back", price: 5, image: "./attached_assets/tickbirds.jpg" },
+    { id: 7, title: "Oxpeckers on Rhino", description: "Oxpeckers on a rhino's back", price: 5, image: "./attached_assets/oxpeackerrhino.jpg" },
+    { id: 8, title: "Durban Skyline", description: "Durban Skyline", price: 5, image: "./attached_assets/durban.jpg" }
 ];
+
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -49,6 +60,11 @@ function initializeNavigation() {
 }
 
 function scrollToSection(sectionId) {
+    // Remove all game event listeners when leaving games section
+    if (currentSection === 'games' && sectionId !== 'games') {
+        removeAllGameEventListeners();
+    }
+    
     // Hide all sections
     document.querySelectorAll('.section').forEach(section => {
         section.classList.remove('active');
@@ -59,6 +75,11 @@ function scrollToSection(sectionId) {
     if (targetSection) {
         targetSection.classList.add('active');
         currentSection = sectionId;
+        
+        // Add game event listeners only when entering games section
+        if (sectionId === 'games') {
+            addAllGameEventListeners();
+        }
         
         // Update nav links
         document.querySelectorAll('.nav-link').forEach(link => {
@@ -71,6 +92,27 @@ function scrollToSection(sectionId) {
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+}
+
+// Game event listener management
+function addAllGameEventListeners() {
+    if (gameEventListeners.snake) document.addEventListener('keydown', gameEventListeners.snake.keydown);
+    if (gameEventListeners.snake) document.addEventListener('keyup', gameEventListeners.snake.keyup);
+    if (gameEventListeners.tetris) document.addEventListener('keydown', gameEventListeners.tetris.keydown);
+    if (gameEventListeners.pong) document.addEventListener('keydown', gameEventListeners.pong.keydown);
+    if (gameEventListeners.pong) document.addEventListener('keyup', gameEventListeners.pong.keyup);
+    if (gameEventListeners.breakout) document.addEventListener('keydown', gameEventListeners.breakout.keydown);
+    if (gameEventListeners.breakout) document.addEventListener('keyup', gameEventListeners.breakout.keyup);
+}
+
+function removeAllGameEventListeners() {
+    if (gameEventListeners.snake) document.removeEventListener('keydown', gameEventListeners.snake.keydown);
+    if (gameEventListeners.snake) document.removeEventListener('keyup', gameEventListeners.snake.keyup);
+    if (gameEventListeners.tetris) document.removeEventListener('keydown', gameEventListeners.tetris.keydown);
+    if (gameEventListeners.pong) document.removeEventListener('keydown', gameEventListeners.pong.keydown);
+    if (gameEventListeners.pong) document.removeEventListener('keyup', gameEventListeners.pong.keyup);
+    if (gameEventListeners.breakout) document.removeEventListener('keydown', gameEventListeners.breakout.keydown);
+    if (gameEventListeners.breakout) document.removeEventListener('keyup', gameEventListeners.breakout.keyup);
 }
 
 // Animated background
@@ -278,9 +320,11 @@ function initializeSnakeGame() {
         keysPressed.delete(e.key);
     }
     
-    // Event listeners
-    document.addEventListener('keydown', handleKeyPress);
-    document.addEventListener('keyup', handleKeyUp);
+    // Store event listeners for external management
+    gameEventListeners.snake = {
+        keydown: handleKeyPress,
+        keyup: handleKeyUp
+    };
     
     startBtn.addEventListener('click', () => {
         if (gameState.gameRunning) {
@@ -537,8 +581,10 @@ function initializeTetrisGame() {
         }
     }
     
-    // Event listeners
-    document.addEventListener('keydown', handleKeyPress);
+    // Store event listeners for external management
+    gameEventListeners.tetris = {
+        keydown: handleKeyPress
+    };
     
     startBtn.addEventListener('click', () => {
         if (gameState.gameRunning) {
@@ -716,9 +762,11 @@ function initializePongGame() {
         keysPressed.delete(e.key);
     }
     
-    // Event listeners
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('keyup', handleKeyUp);
+    // Store event listeners for external management
+    gameEventListeners.pong = {
+        keydown: handleKeyDown,
+        keyup: handleKeyUp
+    };
     
     startBtn.addEventListener('click', () => {
         if (gameState.gameRunning) {
@@ -957,9 +1005,11 @@ function initializeBreakoutGame() {
         keysPressed.delete(e.key);
     }
     
-    // Event listeners
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('keyup', handleKeyUp);
+    // Store event listeners for external management
+    gameEventListeners.breakout = {
+        keydown: handleKeyDown,
+        keyup: handleKeyUp
+    };
     
     startBtn.addEventListener('click', () => {
         if (gameState.gameRunning) {
