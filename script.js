@@ -14,23 +14,32 @@ document.addEventListener("DOMContentLoaded", () => {
 function initializeNavigation() {
     const navLinks = document.querySelectorAll(".nav-link");
     const sections = document.querySelectorAll(".section");
+    const mobileNav = document.getElementById("mobileNav");
 
     navLinks.forEach(link => {
-        link.addEventListener("click", () => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            // Remove .active from all nav links
             navLinks.forEach(l => l.classList.remove("active"));
             link.classList.add("active");
 
+            // Hide all sections and show the selected one
             const target = link.getAttribute("data-section");
             sections.forEach(section => {
                 section.classList.remove("active");
-                if (section.id === target) section.classList.add("active");
+                if (section.id === target) {
+                    section.classList.add("active");
+                }
             });
+
+            // Close mobile nav if open
+            mobileNav.classList.remove("show");
         });
     });
 
+    // Handle mobile nav toggle
     const mobileMenuBtn = document.getElementById("mobileMenuBtn");
-    const mobileNav = document.getElementById("mobileNav");
-
     mobileMenuBtn.addEventListener("click", () => {
         mobileNav.classList.toggle("show");
     });
