@@ -242,9 +242,8 @@ function initializeSnakeGame() {
     
     // Controls
     function handleKeyPress(e) {
-        // Don't capture keys if user is typing in form inputs or not in games section
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || currentSection !== 'games') return;
-        if (!gameState.gameRunning) return;
+    const tag = e.target.tagName.toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
         
         const key = e.key;
         if (keysPressed.has(key)) return;
@@ -491,9 +490,8 @@ function initializeTetrisGame() {
     
     // Controls
     function handleKeyPress(e) {
-        // Don't capture keys if user is typing in form inputs or not in games section
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || currentSection !== 'games') return;
-        if (!gameState.gameRunning || !gameState.currentPiece) return;
+    const tag = e.target.tagName.toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
         
         e.preventDefault();
         const piece = gameState.currentPiece;
@@ -704,8 +702,6 @@ function initializePongGame() {
     
     // Controls
     function handleKeyDown(e) {
-        // Don't capture keys if user is typing in form inputs or not in games section
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || currentSection !== 'games') return;
         if (['ArrowUp', 'ArrowDown', 'w', 'W', 's', 'S'].includes(e.key)) {
             e.preventDefault();
             keysPressed.add(e.key);
@@ -945,8 +941,6 @@ function initializeBreakoutGame() {
     
     // Controls
     function handleKeyDown(e) {
-        // Don't capture keys if user is typing in form inputs or not in games section
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || currentSection !== 'games') return;
         if (['ArrowLeft', 'ArrowRight', 'a', 'A', 'd', 'D'].includes(e.key)) {
             e.preventDefault();
             keysPressed.add(e.key);
@@ -990,8 +984,15 @@ function initializeModal() {
     });
     
     purchaseBtn.addEventListener('click', () => {
-        showToast('PayPal integration would be implemented here');
-    });
+    const title = document.getElementById('modalTitle').textContent;
+    const price = parseFloat(document.getElementById('modalPrice').textContent.replace('$', ''));
+    const paypalUrl = `https://www.paypal.com/paypalme/michaelgeorgiades1/${price}`;
+    
+    // Optionally include note param
+    // const url = `${paypalUrl}?note=${encodeURIComponent(title)}`;
+    
+    window.open(paypalUrl, '_blank');
+});
 }
 
 function openPhotoModal(photoId) {
@@ -1022,21 +1023,37 @@ function closePhotoModal() {
 function initializeContactForm() {
     const form = document.getElementById('contactForm');
     
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const formData = new FormData(form);
-        const data = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            subject: formData.get('subject'),
-            message: formData.get('message')
-        };
-        
-        // Simulate form submission
-        showToast('Message sent successfully!');
-        form.reset();
-    });
+    form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const recaptchaResponse = grecaptcha.getResponse();
+    if (!recaptchaResponse) {
+        showToast("Please complete the reCAPTCHA.");
+        return;
+    }
+
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch('contact.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showToast('Message sent successfully!');
+            form.reset();
+            grecaptcha.reset();
+        } else {
+            showToast(result.error || 'Something went wrong.');
+        }
+    } catch (err) {
+        console.error(err);
+        showToast('Network error — please try again.');
+    }
+});
 }
 
 // Toast notification
