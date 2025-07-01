@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Diagnose App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #2c5aa0, #1e3c72);
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .disclaimer {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #856404;
+        }
+
+        .form-section {
+            padding: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .symptom-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .category {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .category h4 {
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+
+        .category ul {
+            list-style: none;
+        }
+
+        .category li {
+            padding: 3px 0;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .analyze-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .analyze-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .condition {
+            background: white;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .condition h3 {
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+
+        .severity {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .severity.low { background: #d4edda; color: #155724; }
+        .severity.medium { background: #fff3cd; color: #856404; }
+        .severity.high { background: #f8d7da; color: #721c24; }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🩺 Doctor Diagnose</h1>
+            <p>AI-Powered Symptom Analysis Tool</p>
+        </div>
+
+        <div class="disclaimer">
+            <strong>⚠️ Medical Disclaimer:</strong> This tool is for educational purposes only and should not replace professional medical advice. Always consult with a qualified healthcare provider for proper diagnosis and treatment.
+        </div>
+
+        <div class="form-section">
+            <div class="input-group">
+                <label for="symptoms">Describe Your Symptoms:</label>
+                <textarea id="symptoms" placeholder="Please describe your symptoms in detail. For example: 'I have a headache, fever, and sore throat that started 2 days ago...'"></textarea>
+            </div>
+
+            <div class="symptom-categories">
+                <div class="category">
+                    <h4>🤒 General Symptoms</h4>
+                    <ul>
+                        <li>Fever/Chills</li>
+                        <li>Fatigue</li>
+                        <li>Body aches</li>
+                        <li>Weakness</li>
+                    </ul>
+                </div>
+                <div class="category">
+                    <h4>🧠 Head & Neurological</h4>
+                    <ul>
+                        <li>Headache</li>
+                        <li>Dizziness</li>
+                        <li>Confusion</li>
+                        <li>Memory issues</li>
+                    </ul>
+                </div>
+                <div class="category">
+                    <h4>🫁 Respiratory</h4>
+                    <ul>
+                        <li>Cough</li>
+                        <li>Shortness of breath</li>
+                        <li>Chest pain</li>
+                        <li>Sore throat</li>
+                    </ul>
+                </div>
+                <div class="category">
+                    <h4>🍽️ Digestive</h4>
+                    <ul>
+                        <li>Nausea</li>
+                        <li>Vomiting</li>
+                        <li>Diarrhea</li>
+                        <li>Abdominal pain</li>
+                    </ul>
+                </div>
+            </div>
+
+            <button class="analyze-btn" onclick="analyzeSymptoms()">
+                Analyze Symptoms
+            </button>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Analyzing your symptoms...</p>
+            </div>
+
+            <div class="results" id="results"></div>
+        </div>
+    </div>
+
+    <script>
+        // Medical knowledge database
+        const medicalDatabase = {
+            'common cold': {
+                symptoms: ['runny nose', 'sneezing', 'sore throat', 'mild cough', 'congestion'],
+                severity: 'low',
+                description: 'A viral infection of the upper respiratory tract.',
+                recommendations: ['Rest', 'Stay hydrated', 'Use throat lozenges', 'Consider over-the-counter cold medications']
+            },
+            'flu': {
+                symptoms: ['fever', 'body aches', 'fatigue', 'headache', 'chills', 'cough'],
+                severity: 'medium',
+                description: 'Influenza is a viral infection that attacks the respiratory system.',
+                recommendations: ['Rest', 'Drink plenty of fluids', 'Consider antiviral medications if caught early', 'Seek medical attention if symptoms worsen']
+            },
+            'migraine': {
+                symptoms: ['severe headache', 'nausea', 'light sensitivity', 'sound sensitivity', 'visual disturbances'],
+                severity: 'medium',
+                description: 'A neurological condition causing intense headaches.',
+                recommendations: ['Rest in a dark, quiet room', 'Apply cold compress', 'Stay hydrated', 'Consider prescription medications']
+            },
+            'food poisoning': {
+                symptoms: ['nausea', 'vomiting', 'diarrhea', 'stomach cramps', 'fever'],
+                severity: 'medium',
+                description: 'Illness caused by consuming contaminated food or beverages.',
+                recommendations: ['Stay hydrated', 'Eat bland foods when able', 'Rest', 'Seek medical attention if symptoms are severe']
+            },
+            'allergic reaction': {
+                symptoms: ['rash', 'itching', 'swelling', 'difficulty breathing', 'hives'],
+                severity: 'high',
+                description: 'An immune system response to a perceived harmful substance.',
+                recommendations: ['Avoid the allergen', 'Take antihistamines', 'Seek immediate medical attention for severe reactions', 'Consider carrying an EpiPen if prescribed']
+            },
+            'tension headache': {
+                symptoms: ['mild to moderate headache', 'pressure around forehead', 'neck tension', 'stress'],
+                severity: 'low',
+                description: 'The most common type of headache, often stress-related.',
+                recommendations: ['Rest', 'Apply heat or cold', 'Manage stress', 'Over-the-counter pain relievers']
+            },
+            'gastroenteritis': {
+                symptoms: ['diarrhea', 'vomiting', 'stomach cramps', 'fever', 'dehydration'],
+                severity: 'medium',
+                description: 'Inflammation of the stomach and intestines, often called "stomach flu".',
+                recommendations: ['Stay hydrated', 'Eat bland foods', 'Rest', 'Seek medical attention if severe dehydration occurs']
+            }
+        };
+
+        function analyzeSymptoms() {
+            const symptomsInput = document.getElementById('symptoms').value.trim().toLowerCase();
+            
+            if (!symptomsInput) {
+                alert('Please enter your symptoms before analyzing.');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('loading').classList.add('show');
+            document.getElementById('results').classList.remove('show');
+
+            // Simulate analysis delay
+            setTimeout(() => {
+                const matches = findMatches(symptomsInput);
+                displayResults(matches);
+                
+                document.getElementById('loading').classList.remove('show');
+                document.getElementById('results').classList.add('show');
+            }, 2000);
+        }
+
+        function findMatches(symptoms) {
+            const matches = [];
+            
+            for (const [condition, data] of Object.entries(medicalDatabase)) {
+                let matchCount = 0;
+                const totalSymptoms = data.symptoms.length;
+                
+                data.symptoms.forEach(symptom => {
+                    if (symptoms.includes(symptom.toLowerCase())) {
+                        matchCount++;
+                    }
+                });
+                
+                const matchPercentage = (matchCount / totalSymptoms) * 100;
+                
+                if (matchPercentage > 20) { // At least 20% match
+                    matches.push({
+                        condition: condition,
+                        data: data,
+                        matchPercentage: Math.round(matchPercentage),
+                        matchCount: matchCount
+                    });
+                }
+            }
+            
+            // Sort by match percentage
+            matches.sort((a, b) => b.matchPercentage - a.matchPercentage);
+            
+            return matches.slice(0, 5); // Return top 5 matches
+        }
+
+        function displayResults(matches) {
+            const resultsDiv = document.getElementById('results');
+            
+            if (matches.length === 0) {
+                resultsDiv.innerHTML = `
+                    <div class="condition">
+                        <h3>No Clear Matches Found</h3>
+                        <p>Based on the symptoms described, we couldn't find specific matching conditions in our database. This doesn't mean nothing is wrong - many conditions have unique symptom combinations.</p>
+                        <p><strong>Recommendation:</strong> Please consult with a healthcare professional for proper evaluation and diagnosis.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '<h2>🔍 Possible Conditions Based on Your Symptoms:</h2>';
+            
+            matches.forEach((match, index) => {
+                const severityClass = match.data.severity;
+                const confidence = match.matchPercentage;
+                
+                html += `
+                    <div class="condition">
+                        <div class="severity ${severityClass}">${match.data.severity.toUpperCase()} SEVERITY</div>
+                        <h3>${match.condition.toUpperCase()} (${confidence}% match)</h3>
+                        <p><strong>Description:</strong> ${match.data.description}</p>
+                        <p><strong>Common Symptoms:</strong> ${match.data.symptoms.join(', ')}</p>
+                        <p><strong>Recommendations:</strong></p>
+                        <ul>
+                            ${match.data.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            });
+            
+            html += `
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                    <strong>🩺 Important Reminder:</strong> This analysis is based on pattern matching and should not replace professional medical diagnosis. Please consult with a healthcare provider, especially if symptoms are severe or persistent.
+                </div>
+            `;
+            
+            resultsDiv.innerHTML = html;
+        }
+
+        // Add enter key support for textarea
+        document.getElementById('symptoms').addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.key === 'Enter') {
+                analyzeSymptoms();
+            }
+        });
+    </script>
+</body>
+</html>

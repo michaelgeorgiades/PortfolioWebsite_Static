@@ -1,12 +1,15 @@
 // Global variables
 let currentSection = 'home';
 let isMobileMenuOpen = false;
+let currentPhotoData = null;
 let gameEventListeners = {
     snake: null,
     tetris: null,
     pong: null,
     breakout: null
 };
+
+
 
 // Photo data
 const photos = [
