@@ -305,28 +305,83 @@
 
             for (const term of searchTerms) {
                 try {
-                    // Search the conditions table
-                    const response = await fetch(`https://clinicaltables.nlm.nih.gov/api/conditions/v3/search?terms=${encodeURIComponent(term)}&maxList=10`);
+                    // Using JSONP format to avoid CORS issues
+                    const response = await fetch(`https://clinicaltables.nlm.nih.gov/api/conditions/v3/search?terms=${encodeURIComponent(term)}&maxList=15&df=primary_name,consumer_name`);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
                     const data = await response.json();
                     
+                    // NLM API returns: [total_count, [field_names], [field_data], [primary_data]]
                     if (data && data[3] && data[3].length > 0) {
-                        // data[3] contains the condition names
-                        data[3].forEach(condition => {
-                            if (!allResults.some(r => r.name === condition)) {
+                        data[3].forEach((condition, index) => {
+                            if (condition && !allResults.some(r => r.name.toLowerCase() === condition.toLowerCase())) {
+                                // Get consumer-friendly name if available
+                                let displayName = condition;
+                                if (data[2] && data[2][index] && data[2][index][1]) {
+                                    displayName = data[2][index][1]; // Consumer name
+                                }
+                                
                                 allResults.push({
-                                    name: condition,
+                                    name: displayName,
+                                    technicalName: condition,
                                     searchTerm: term,
-                                    confidence: calculateConfidence(term, symptoms)
+                                    confidence: calculateConfidence(term, symptoms, condition)
                                 });
                             }
                         });
                     }
                 } catch (error) {
                     console.error(`Error searching for ${term}:`, error);
+                    // Continue with other terms even if one fails
                 }
             }
 
+            // If no API results, fall back to basic matching
+            if (allResults.length === 0) {
+                return getBasicMatches(symptoms);
+            }
+
             return allResults.sort((a, b) => b.confidence - a.confidence).slice(0, 8);
+        }
+
+        // Fallback function for basic matching when API fails
+        function getBasicMatches(symptoms) {
+            const basicConditions = [
+                { name: 'Common Cold', terms: ['runny nose', 'sneezing', 'sore throat', 'cough', 'congestion'] },
+                { name: 'Influenza (Flu)', terms: ['fever', 'body aches', 'fatigue', 'headache', 'chills'] },
+                { name: 'Migraine Headache', terms: ['severe headache', 'nausea', 'light sensitivity', 'visual disturbances'] },
+                { name: 'Gastroenteritis', terms: ['nausea', 'vomiting', 'diarrhea', 'stomach cramps', 'abdominal pain'] },
+                { name: 'Allergic Reaction', terms: ['rash', 'itching', 'swelling', 'hives', 'difficulty breathing'] },
+                { name: 'Sinusitis', terms: ['facial pain', 'nasal congestion', 'sinus pressure', 'post nasal drip'] },
+                { name: 'Tension Headache', terms: ['headache', 'neck tension', 'stress', 'head pressure'] },
+                { name: 'Food Poisoning', terms: ['nausea', 'vomiting', 'diarrhea', 'stomach pain', 'fever'] }
+            ];
+
+            const matches = [];
+            const normalizedSymptoms = symptoms.toLowerCase();
+
+            basicConditions.forEach(condition => {
+                let matchCount = 0;
+                condition.terms.forEach(term => {
+                    if (normalizedSymptoms.includes(term.toLowerCase())) {
+                        matchCount++;
+                    }
+                });
+
+                if (matchCount > 0) {
+                    matches.push({
+                        name: condition.name,
+                        technicalName: condition.name,
+                        searchTerm: 'local database',
+                        confidence: Math.min(90, (matchCount / condition.terms.length) * 100)
+                    });
+                }
+            });
+
+            return matches.sort((a, b) => b.confidence - a.confidence).slice(0, 5);
         }
 
         function extractMedicalTerms(symptoms) {
@@ -354,21 +409,31 @@
             return Array.from(terms).slice(0, 10); // Limit to prevent too many API calls
         }
 
-        function calculateConfidence(searchTerm, originalSymptoms) {
+        function calculateConfidence(searchTerm, originalSymptoms, conditionName = '') {
             const normalizedSymptoms = originalSymptoms.toLowerCase();
-            let confidence = 30; // Base confidence
+            let confidence = 40; // Base confidence
             
             // Increase confidence for exact matches
             if (normalizedSymptoms.includes(searchTerm.toLowerCase())) {
-                confidence += 40;
+                confidence += 30;
             }
             
             // Increase confidence for medical terms
             if (Object.keys(symptomKeywords).includes(searchTerm)) {
-                confidence += 20;
+                confidence += 15;
             }
             
-            return Math.min(confidence, 90);
+            // Boost confidence if condition name contains symptom words
+            if (conditionName) {
+                const conditionWords = conditionName.toLowerCase().split(' ');
+                const symptomWords = normalizedSymptoms.split(' ');
+                const commonWords = conditionWords.filter(word => 
+                    symptomWords.some(symptom => symptom.includes(word) || word.includes(symptom))
+                );
+                confidence += commonWords.length * 5;
+            }
+            
+            return Math.min(confidence, 85);
         }
 
         function analyzeSymptoms() {
@@ -415,7 +480,7 @@
                         <ul>
                             <li>Symptoms being too general or uncommon</li>
                             <li>A combination of symptoms that doesn't match known patterns</li>
-                            <li>Symptoms that require more specific medical terminology</li>
+                            <li>Temporary issues with the medical database connection</li>
                         </ul>
                         <p><strong>💡 Try being more specific:</strong> Instead of "I feel bad," try "headache and fever for 2 days"</p>
                         <p><strong>⚠️ Important:</strong> Please consult with a healthcare professional for proper evaluation and diagnosis.</p>
@@ -424,7 +489,11 @@
                 return;
             }
 
-            let html = '<h2>🔍 Possible Medical Conditions (from NLM Database):</h2>';
+            // Determine data source
+            const isApiData = results.some(r => r.searchTerm !== 'local database');
+            const dataSource = isApiData ? 'U.S. National Library of Medicine' : 'Local Knowledge Base';
+
+            let html = '<h2>🔍 Possible Medical Conditions:</h2>';
             html += `<p style="margin-bottom: 20px; font-style: italic; color: #666;">Based on analysis of: "${originalSymptoms}"</p>`;
             
             results.forEach((result, index) => {
@@ -436,18 +505,19 @@
                 html += `
                     <div class="condition">
                         <div class="severity" style="background: ${confidenceColor}; color: #333;">
-                            ${confidenceText} CONFIDENCE (${result.confidence}%)
+                            ${confidenceText} CONFIDENCE (${Math.round(result.confidence)}%)
                         </div>
                         <h3>${result.name.toUpperCase()}</h3>
-                        <p><strong>📋 Medical Condition:</strong> ${result.name}</p>
-                        <p><strong>🔍 Matched Search Term:</strong> "${result.searchTerm}"</p>
-                        <p><strong>📊 Match Confidence:</strong> ${result.confidence}% based on symptom analysis</p>
+                        <p><strong>📋 Condition:</strong> ${result.name}</p>
+                        ${result.technicalName !== result.name ? `<p><strong>🔬 Technical Name:</strong> ${result.technicalName}</p>` : ''}
+                        <p><strong>🔍 Matched Term:</strong> "${result.searchTerm}"</p>
+                        <p><strong>📊 Match Confidence:</strong> ${Math.round(result.confidence)}% based on symptom analysis</p>
                         <p><strong>⚠️ Next Steps:</strong></p>
                         <ul>
-                            <li>Research this condition further with reliable medical sources</li>
+                            <li>Research this condition with reliable medical sources</li>
                             <li>Note any additional symptoms you may have</li>
-                            <li>Consult with a healthcare professional for proper diagnosis</li>
-                            <li>Consider if this condition matches your symptom timeline</li>
+                            <li>Consider the timeline and severity of your symptoms</li>
+                            <li><strong>Consult with a healthcare professional for proper diagnosis</strong></li>
                         </ul>
                     </div>
                 `;
@@ -456,9 +526,10 @@
             html += `
                 <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin-top: 20px;">
                     <h4>🏥 About This Analysis</h4>
-                    <p><strong>Data Source:</strong> U.S. National Library of Medicine Clinical Tables</p>
-                    <p><strong>Database Size:</strong> 2,400+ medical conditions</p>
-                    <p><strong>Accuracy Note:</strong> This tool provides educational information only. Medical conditions can have overlapping symptoms, and proper diagnosis requires professional medical evaluation.</p>
+                    <p><strong>Data Source:</strong> ${dataSource}</p>
+                    ${isApiData ? '<p><strong>Database:</strong> 2,400+ medical conditions from clinical databases</p>' : '<p><strong>Database:</strong> Common conditions from medical knowledge base</p>'}
+                    <p><strong>Analysis Method:</strong> Symptom keyword matching and confidence scoring</p>
+                    <p><strong>Accuracy Note:</strong> This tool provides educational information only. Medical conditions often have overlapping symptoms, and proper diagnosis requires professional medical evaluation.</p>
                 </div>
                 
                 <div style="background: #ffebee; padding: 15px; border-radius: 8px; margin-top: 15px;">
