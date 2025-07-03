@@ -1049,7 +1049,7 @@ function initializeModal() {
 
 function openPhotoModal(photoId) {
     const photo = photos.find(p => p.id === photoId);
-    if (!photo) return;
+    if (!photo) return; 
     
     const modal = document.getElementById('photoModal');
     const modalImage = document.getElementById('modalImage');
