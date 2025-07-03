@@ -1041,6 +1041,10 @@ function initializeModal() {
             closePhotoModal();
         }
     });
+
+    paypal.Buttons({
+     // configuration options
+    }).render('#paypal-button-container-modal');
     
     purchaseBtn.addEventListener('click', () => {
         showToast('PayPal integration would be implemented here');
@@ -1049,7 +1053,7 @@ function initializeModal() {
 
 function openPhotoModal(photoId) {
     const photo = photos.find(p => p.id === photoId);
-    if (!photo) return; 
+    if (!photo) return;
     
     const modal = document.getElementById('photoModal');
     const modalImage = document.getElementById('modalImage');
