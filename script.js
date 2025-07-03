@@ -1043,7 +1043,6 @@ function initializeModal() {
     });
 
     paypal.Buttons({
-     // configuration options
     }).render('#paypal-button-container-modal');
     
     purchaseBtn.addEventListener('click', () => {
