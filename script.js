@@ -1041,6 +1041,10 @@ function initializeModal() {
             closePhotoModal();
         }
     });
+
+    paypal.Buttons({
+     // configuration options
+   }).render('#paypal-button-container-modal');
     
     purchaseBtn.addEventListener('click', () => {
         showToast('PayPal integration would be implemented here');
