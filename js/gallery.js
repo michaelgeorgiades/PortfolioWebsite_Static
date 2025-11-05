@@ -75,3 +75,6 @@ function closePhotoModal() {
     const modal = document.getElementById('photoModal');
     modal.style.display = 'none';
 }
+
+window.openPhotoModal = openPhotoModal;
+window.closePhotoModal = closePhotoModal;

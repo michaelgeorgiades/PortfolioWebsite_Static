@@ -1,8 +1,8 @@
 // Global variables
-let currentSection = 'home';
+window.currentSection = 'home';
 let isMobileMenuOpen = false;
 
-let gameEventListeners = {
+window.gameEventListeners = {
     snake: null,
     tetris: null,
     pong: null,
@@ -11,6 +11,7 @@ let gameEventListeners = {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM fully loaded and parsed");
     initializeNavigation();
     initializeBackground();
     initializeGames();
@@ -37,7 +38,6 @@ function formatPrice(price) {
 }
 
 // Export functions for global access
-window.scrollToSection = scrollToSection;
-window.openPhotoModal = openPhotoModal;
-window.closePhotoModal = closePhotoModal;
+
+
 window.showToast = showToast;

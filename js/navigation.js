@@ -29,7 +29,7 @@ function initializeNavigation() {
 
 function scrollToSection(sectionId) {
     // Remove all game event listeners when leaving games section
-    if (currentSection === 'games' && sectionId !== 'games') {
+    if (window.currentSection === 'games' && sectionId !== 'games') {
         removeAllGameEventListeners();
     }
     
@@ -42,7 +42,7 @@ function scrollToSection(sectionId) {
     const targetSection = document.getElementById(sectionId);
     if (targetSection) {
         targetSection.classList.add('active');
-        currentSection = sectionId;
+        window.currentSection = sectionId;
         
         // Add game event listeners only when entering games section
         if (sectionId === 'games') {
@@ -61,3 +61,5 @@ function scrollToSection(sectionId) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }
+
+window.scrollToSection = scrollToSection;

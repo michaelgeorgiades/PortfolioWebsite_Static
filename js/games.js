@@ -203,8 +203,8 @@ function initializeTetrisGame() {
     const scoreElement = document.getElementById('tetrisScore');
     
     const BLOCK_SIZE = 30;
-    const COLS = canvas.width / BLOCK_SIZE;
-    const ROWS = canvas.height / BLOCK_SIZE;
+    const COLS = Math.floor(canvas.width / BLOCK_SIZE);
+    const ROWS = Math.floor(canvas.height / BLOCK_SIZE);
     
     const pieces = [
         [[1,1,1,1]], // I
