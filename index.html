@@ -238,11 +238,20 @@
                     </div>
 
                     <div class="photo-item" data-photo-id="4">
+                        <img src="./attached_assets/moon.jpg" alt="The Moon" class="photo-image">
+                        <div class="photo-overlay">
+                            <h4>The Moon</h4>
+                            <p>The Moon</p>
+                            <button class="btn btn-small" onclick="openPhotoModal(8)">View & Purchase - $5</button>
+                        </div>
+                    </div>
+
+                    <div class="photo-item" data-photo-id="4">
                         <img src="./attached_assets/durban.jpg" alt="Durban" class="photo-image">
                         <div class="photo-overlay">
                             <h4>Durban Skyline</h4>
                             <p>Durban Skyline</p>
-                            <button class="btn btn-small" onclick="openPhotoModal(8)">View & Purchase - $5</button>
+                            <button class="btn btn-small" onclick="openPhotoModal(9)">View & Purchase - $5</button>
                         </div>
                     </div>
                 </div>
@@ -349,8 +358,7 @@
                 <div class="modal-actions">
                     <div class="price" id="modalPrice"></div>
                     <div id="paypal-button-container-modal"></div>
-                    <button id="purchaseBtn" class="btn btn-primary">Purchase</button>
-                    <button id="closeModalBtn" class="btn btn-secondary">Close</button>
+                    <button id="closeModalBtn" class="btn btn-secondary" onclick="closePhotoModal()">Close</button>
                 </div>
             </div>
         </div>
@@ -361,6 +369,11 @@
         <span id="toastMessage"></span>
     </div>
 
-    <script src="script.js"></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/navigation.js" defer></script>
+    <script src="js/background.js" defer></script>
+    <script src="js/games.js" defer></script>
+    <script src="js/gallery.js" defer></script>
+    <script src="js/contact.js" defer></script>
 </body>
 </html>
