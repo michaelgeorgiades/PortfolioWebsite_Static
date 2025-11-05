@@ -1030,7 +1030,7 @@ function initializeBreakoutGame() {
 // Photo modal functionality
 function initializeModal() {
     const modal = document.getElementById('photoModal');
-    const closeBtn = document.getElementById('closeModal');
+    const closeBtn = document.getElementById('closeModalBtn');
     const purchaseBtn = document.getElementById('purchaseBtn');
     
     closeBtn.addEventListener('click', closePhotoModal);

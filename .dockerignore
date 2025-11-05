@@ -1,0 +1,9 @@
+Dockerfile
+.dockerignore
+.git
+.gitignore
+.github
+github_action_key
+github_action_key.pub
+README.md
+gemini.md
