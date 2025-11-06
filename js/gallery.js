@@ -7,7 +7,8 @@ const photos = [
     { id: 5, title: "Tower Bridge in London", description: "Tower Bridge in London", price: 5, image: "./attached_assets/towerbridge.jpg" },
     { id: 6, title: "Oxpeckers on Zebra", description: "Oxpeckers on a zebras's back", price: 5, image: "./attached_assets/tickbirds.jpg" },
     { id: 7, title: "Oxpeckers on Rhino", description: "Oxpeckers on a rhino's back", price: 5, image: "./attached_assets/oxpeackerrhino.jpg" },
-    { id: 8, title: "Durban Skyline", description: "Durban Skyline", price: 5, image: "./attached_assets/durban.jpg" }
+    { id: 8, title: "The Moon", description: "The Moon", price: 5, image: "./attached_assets/moon.jpg" },
+    { id: 9, title: "Durban Skyline", description: "Durban Skyline", price: 5, image: "./attached_assets/durban.jpg" }
 ];
 
 let currentPhotoData = null;
