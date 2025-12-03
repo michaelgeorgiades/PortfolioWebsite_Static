@@ -1,0 +1,56 @@
+Privacy Policy for QRay
+
+  Last Updated: 2025-12-02
+
+  Thank you for using QRay ("the App"). This Privacy Policy describes how your information is collected, used, and handled when you use our application.
+
+  1. Information We Collect
+
+  QRay is designed to be a private and secure utility. The app handles the following types of information:
+
+   * QR Code Data: Any information you enter to create a QR code (such as website URLs, text, business card details, or Wi-Fi credentials) or any information decoded when you scan a QR code.
+   * Scan History: The app stores a history of the last 20 QR codes you have scanned.
+
+  All of the information listed above is stored locally on your device only. It is never transmitted, uploaded, or shared to any external servers or third parties by the App.
+
+  2. How We Use Your Information
+
+  The information handled by the App is used solely for the following purposes:
+
+   * To generate QR codes based on the data you provide.
+   * To display the information from a QR code you have scanned.
+   * To store your recent scan history on your device for your convenience.
+   * To automatically connect to a Wi-Fi network when you scan a valid Wi-Fi QR code.
+
+  3. Data Storage and Security
+
+  All data, including your scan history, is stored in the app's private directory on your device. The security of this data is dependent on the overall security of your mobile device. We do not implement any
+  additional encryption on this data. Clearing the app's data or uninstalling the app will permanently delete this history.
+
+  4. Permissions
+
+  QRay requires the following permissions to function correctly:
+
+   * Camera: This permission is required to allow the App to scan QR codes using your device's camera. The camera is only activated when you are on the "Scan" tab.
+   * Location: This permission is required by the Android operating system to allow an app to scan for and connect to Wi-Fi networks. QRay does not collect, store, or transmit your location data. This
+     permission is used only to facilitate the Wi-Fi connection feature.
+
+  5. Third-Party Services
+
+  QRay does not use any third-party services that would result in the sharing of your personal information. Any "Share" functionality within the app is initiated by you and uses your device's native sharing
+  capabilities.
+
+  6. Children's Privacy
+
+  This App is not intended for use by children under the age of 13. We do not knowingly collect any personally identifiable information from children under 13.
+
+  7. Changes to This Privacy Policy
+
+  We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any
+  changes.
+
+  8. Contact Us
+
+  If you have any questions about this Privacy Policy, you can contact us:
+
+   stinkygreek@gmail.com

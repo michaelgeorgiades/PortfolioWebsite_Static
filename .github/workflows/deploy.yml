@@ -1,0 +1,27 @@
+name: SFTP Deploy to KonsoleH
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sftp-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy via SFTP
+        uses: pressidium/lftp-mirror-action@v1
+        with:
+          host: ${{ secrets.SFTP_HOST }}
+          user: ${{ secrets.SFTP_USERNAME }}
+          pass: ${{ secrets.SFTP_PASSWORD }}
+          # Local folder to upload
+          localDir: ./
+          # Remote path. double-check this!
+          remoteDir: public_html/
+          # Optional flags
+          options: --reverse --delete --verbose
