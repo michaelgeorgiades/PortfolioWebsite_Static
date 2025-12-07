@@ -1,0 +1,47 @@
+# Privacy Policy for Convertinator
+
+**Last Updated: December 7, 2025**
+
+## Overview
+
+Convertinator ("the App") is a unit conversion application. This privacy policy explains how we handle information when you use our App.
+
+## Information We Collect
+
+**We do not collect any personal information.**
+
+The App does not:
+- Require user registration or login
+- Collect names, email addresses, or contact information
+- Track your location
+- Access your contacts, photos, or files
+- Use analytics or tracking services
+- Store your conversion history
+- Use advertising or ad tracking
+
+## Network Usage
+
+The App makes network requests solely to fetch current currency exchange rates from a third-party API (exchangerate-api.com). This request:
+- Does not include any personal or device information
+- Is used only to display up-to-date currency conversion rates
+- Falls back to cached rates if the network is unavailable
+
+We do not control the privacy practices of third-party services. You can review the privacy policy of exchangerate-api.com on their website.
+
+## Data Storage
+
+All data entered into the App (such as values for conversion) is processed locally on your device and is not transmitted to any server. No conversion data is stored persistently.
+
+## Children's Privacy
+
+The App does not collect personal information from anyone, including children under 13.
+
+## Changes to This Policy
+
+We may update this privacy policy from time to time. Any changes will be reflected with an updated "Last Updated" date at the top of this policy.
+
+## Contact
+
+If you have questions about this privacy policy, you can contact us at:
+
+stinkygreek@gmail.com
