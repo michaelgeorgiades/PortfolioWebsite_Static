@@ -74,18 +74,23 @@ function initializeSnakeGame() {
     
     function updateGame() {
         if (!gameState.gameRunning) return;
-        
+
+        // Don't move if no direction is set yet (waiting for first key press)
+        if (gameState.direction.x === 0 && gameState.direction.y === 0) {
+            return;
+        }
+
         // Move snake
         const head = { ...gameState.snake[0] };
         head.x += gameState.direction.x;
         head.y += gameState.direction.y;
-        
+
         // Check wall collision
         if (head.x < 0 || head.x >= GRID_WIDTH || head.y < 0 || head.y >= GRID_HEIGHT) {
             gameOver();
             return;
         }
-        
+
         // Check self collision
         if (gameState.snake.some(segment => segment.x === head.x && segment.y === head.y)) {
             gameOver();
@@ -690,6 +695,8 @@ function initializeBreakoutGame() {
         bricks: [],
         score: 0,
         lives: 3,
+        level: 1,
+        speedMultiplier: 1,
         gameRunning: false
     };
     
@@ -809,10 +816,10 @@ function initializeBreakoutGame() {
             ball.x <= paddle.x + paddle.width) {
             
             ball.dy = -Math.abs(ball.dy);
-            
+
             // Add angle based on where ball hit paddle
             const hitPos = (ball.x - paddle.x) / paddle.width;
-            ball.dx = (hitPos - 0.5) * BALL_SPEED * 2;
+            ball.dx = (hitPos - 0.5) * BALL_SPEED * gameState.speedMultiplier * 2;
         }
         
         // Check brick collisions
@@ -828,20 +835,34 @@ function initializeBreakoutGame() {
                 return;
             }
             
-            // Reset ball position
+            // Reset ball position with current speed
             ball.x = canvas.width / 2;
             ball.y = canvas.height - 50;
-            ball.dx = BALL_SPEED * (Math.random() > 0.5 ? 1 : -1);
-            ball.dy = -BALL_SPEED;
+            ball.dx = BALL_SPEED * gameState.speedMultiplier * (Math.random() > 0.5 ? 1 : -1);
+            ball.dy = -BALL_SPEED * gameState.speedMultiplier;
         }
         
         // Check if all bricks are destroyed
         const remainingBricks = gameState.bricks.filter(brick => brick.visible);
         if (remainingBricks.length === 0) {
-            gameState.gameRunning = false;
-            clearInterval(gameLoop);
-            startBtn.textContent = 'Start Game';
-            showToast('Congratulations! You Win! Final Score: ' + gameState.score);
+            // Advance to next level
+            gameState.level++;
+            gameState.speedMultiplier += 0.2; // Increase speed by 20% each level
+
+            // Reset bricks
+            gameState.bricks = initializeBricks();
+
+            // Reset ball with increased speed
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height - 50;
+            ball.dx = BALL_SPEED * gameState.speedMultiplier * (Math.random() > 0.5 ? 1 : -1);
+            ball.dy = -BALL_SPEED * gameState.speedMultiplier;
+
+            // Bonus points for completing level
+            gameState.score += 100;
+            scoreElement.textContent = gameState.score;
+
+            showToast('Level ' + gameState.level + ' Complete! Speed increased!');
         }
         
         drawGame();
@@ -861,13 +882,15 @@ function initializeBreakoutGame() {
             bricks: initializeBricks(),
             score: 0,
             lives: 3,
+            level: 1,
+            speedMultiplier: 1,
             gameRunning: true
         };
-        
+
         scoreElement.textContent = '0';
         livesElement.textContent = '3';
         drawGame();
-        
+
         gameLoop = setInterval(updateGame, 16);
         startBtn.textContent = 'Stop Game';
     }
