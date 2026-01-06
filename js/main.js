@@ -12,11 +12,17 @@ window.gameEventListeners = {
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM fully loaded and parsed");
+
+    // Load all components first
+    initializeComponents();
+
+    // Initialize core functionality
     initializeNavigation();
     initializeBackground();
-    initializeGames();
     initializeModal();
-    initializeContactForm();
+
+    // Note: initializeGames() and initializeContactForm() are now called
+    // from componentLoader.js after their respective components are loaded
 });
 
 // Toast notification

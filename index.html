@@ -52,291 +52,19 @@
     <!-- Main Content -->
     <main class="main-content">
         <!-- Home Section -->
-        <section id="home" class="section active">
-            <div class="hero-section">
-                <div class="hero-content">
-                    <h1 class="hero-title">Welcome to My Portfolio</h1>
-                    <p class="hero-subtitle">Professional Systems Engineer & Creative Technologist</p>
-                    <p class="hero-description">
-                        Explore my professional journey, photography work, and interactive projects. 
-                        This portfolio showcases my passion for technology, creativity, and innovation.
-                    </p>
-                    <div class="hero-buttons">
-                        <button class="btn btn-primary" onclick="scrollToSection('resume')">View Resume</button>
-                        <button class="btn btn-secondary" onclick="scrollToSection('contact')">Get In Touch</button>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="./attached_assets/stinkygreek.jpg" alt="Michael Georgiades" class="profile-image">
-                </div>
-            </div>
-        </section>
+        <section id="home" class="section active"></section>
 
         <!-- Resume Section -->
-        <section id="resume" class="section">
-            <div class="section-content">
-                <h2 class="section-title">Professional Resume</h2>
-                <div class="resume-content">
-                    <div class="resume-section">
-                        <h3>Professional Experience</h3>
-                        <div class="experience-item">
-                            <h4>Software Support Engineer L2</h4>
-                            <p class="company">Derivco (PTY) LTD</p>
-                            <p class="period">2013 - 2025</p>
-                            <ul>
-                                <li>Support our operators through proactive monitoring and automation while managing tickets logged via a CRM system and Pager Duty</li>
-                                <li>Deployed features to production via Azure & Octopus with zero downtime rollouts</li>
-                                <li>Automated and documented routine tasks using PowerShell and Bash scripting to save many man hours, allowing us to focus on higher value engineering tasks an proactive system improvements</li>
-                                <li>Supported Windows Servers, Linux systems, SQL databases, RabbitMQ and Kafka</li>
-                                <li>Responded to Kibana/Grafana-triggered alerts via Pager Duty as well as custom email alerting</li>
-                            </ul>
-                        </div>
-                        <div class="experience-item">
-                             <h4> Desktop Engineer</h4>
-                            <p class="company">Seaboard Overseas Trading</p>
-                            <p class="period">2010 - 2013</p>
-                            <ul>
-                                <li>Delivered first-line support to 50+ end-users</li>
-                                <li>Managed hardware/software rollouts and updates</li>
-                                <li>Supported remote connectivity for international teams</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="resume-section">
-                        <h3>Technical Skills</h3>
-                        <div class="skills-grid">
-                            <div class="skill-category">
-                                <h4>Operating Systems</h4>
-                                <ul>
-                                    <li>Windows Server, Linux (Ubuntu, CentOS)</li>
-                                </ul>
-                            </div>
-                            <div class="skill-category">
-                                <h4>Cloud & Virtualization</h4>
-                                <ul>
-                                    <li>Azure (AZ-900, AZ-104), VMware vCenter, ESXi, vCloud</li>
-                                </ul>
-                            </div>
-                            <div class="skill-category">
-                                <h4>DevOps & Tools</h4>
-                                <ul>
-                                    <li>Octopus Deploy, PowerShell,</li>
-                                    <li>Docker, Kubernetes, Git</li>
-                                </ul>
-                            </div>
-                            <div class="skill-category">
-                                <h4>Monitoring & Messaging</h4>
-                                <ul>
-                                    <li>Kafka, RabbitMQ, Kibana, Grafana</li>
-                                </ul>
-                            </div>
-                            <div class="skill-category">
-                                <h4>Databases</h4>
-                                <ul>
-                                    <li> SQL Server, MySQL, MongoDB, KSQL</li>
-                                </ul>
-                            </div>
-                            <div class="skill-category">
-                                <h4>Scripting & Automation</h4>
-                                <ul>
-                                    <li>PowerShell, Bash, Python</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="resume-download">
-                        <a href="./attached_assets/Michael Georgiades CV.pdf" 
-                           download="Michael_Georgiades_Resume.pdf" 
-                           class="btn btn-primary">
-                            Download PDF Resume
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <section id="resume" class="section"></section>
 
         <!-- Photography Section -->
-        <!-- If you update this section, double check the gallery.js file too-->
-        <section id="photography" class="section">
-            <div class="section-content">
-                <h2 class="section-title">Photography Gallery</h2>
-                <p class="section-subtitle">Capturing moments through the lens</p>
-                
-                <div class="photo-grid" id="photoGrid">
-                    <div class="photo-item" data-photo-id="1">
-                        <img src="./attached_assets/lighthouse.jpg" alt="Umhlanga Lighthouse" class="photo-image">
-                        <div class="photo-overlay">
-                            <h4>Umhlanga Lighthouse</h4>
-                            <p>Umhlanga Lighthouse in South Africa</p>
-                            <button class="btn btn-small" onclick="openPhotoModal(1)">View & Purchase - $5</button>
-                        </div>
-                    </div>
-                    
-                    <div class="photo-item" data-photo-id="2">
-                        <img src="./attached_assets/vulture.jpg" alt="Vulture" class="photo-image">
-                        <div class="photo-overlay">
-                            <h4>Vulture</h4>
-                            <p>A Vulture in Black & White</p>
-                            <button class="btn btn-small" onclick="openPhotoModal(2)">View & Purchase - $5</button>
-                        </div>
-                    </div>
-                    
-                    <div class="photo-item" data-photo-id="3">
-                        <img src="./attached_assets/oxpeckerzebratail.jpg" alt="Oxpecker on a Zebra's tail" class="photo-image">
-                        <div class="photo-overlay">
-                            <h4>Oxpecker on Zebra Tail</h4>
-                            <p>An Oxpecker on a Zebra's Tail</p>
-                            <button class="btn btn-small" onclick="openPhotoModal(3)">View & Purchase - $5</button>
-                        </div>
-                    </div>
-                    
-                    <div class="photo-item" data-photo-id="4">
-                        <img src="./attached_assets/oxpeckergiraffe.jpg" alt="Oxpecker on Giraffe" class="photo-image">
-                        <div class="photo-overlay">
-                            <h4>Oxpeckers on Giraffe</h4>
-                            <p>Oxpeckers on a giraffe's back</p>
-                            <button class="btn btn-small" onclick="openPhotoModal(4)">View & Purchase - $5</button>
-                        </div>
-                    </div>
-
-                    <div class="photo-item" data-photo-id="5">
-                        <img src="./attached_assets/towerbridge.jpg" alt="Tower Bridge" class="photo-image">
-                        <div class="photo-overlay">
-                            <h4>Tower Bridge in London</h4>
-                            <p>Tower Bridge in London</p>
-                            <button class="btn btn-small" onclick="openPhotoModal(5)">View & Purchase - $5</button>
-                        </div>
-                    </div>
-
-                    <div class="photo-item" data-photo-id="6">
-                        <img src="./attached_assets/tickbirds.jpg" alt="Oxpeckers on Zebra" class="photo-image">
-                        <div class="photo-overlay">
-                            <h4>Oxpeckers on a Zebra</h4>
-                            <p>Oxpeckers on a zebras's back</p>
-                            <button class="btn btn-small" onclick="openPhotoModal(6)">View & Purchase - $5</button>
-                        </div>
-                    </div>
-
-                    <div class="photo-item" data-photo-id="7">
-                        <img src="./attached_assets/oxpeackerrhino.jpg" alt="Oxpecker on Rhino" class="photo-image">
-                        <div class="photo-overlay">
-                            <h4>Oxpeckers on Rhino</h4>
-                            <p>Oxpeckers on a rhino's back</p>
-                            <button class="btn btn-small" onclick="openPhotoModal(7)">View & Purchase - $5</button>
-                        </div>
-                    </div>
-
-                    <div class="photo-item" data-photo-id="8">
-                        <img src="./attached_assets/moon.jpg" alt="The Moon" class="photo-image">
-                        <div class="photo-overlay">
-                            <h4>The Moon</h4>
-                            <p>The Moon</p>
-                            <button class="btn btn-small" onclick="openPhotoModal(8)">View & Purchase - $5</button>
-                        </div>
-                    </div>
-
-                    <div class="photo-item" data-photo-id="9">
-                        <img src="./attached_assets/durban.jpg" alt="Durban" class="photo-image">
-                        <div class="photo-overlay">
-                            <h4>Durban Skyline</h4>
-                            <p>Durban Skyline</p>
-                            <button class="btn btn-small" onclick="openPhotoModal(9)">View & Purchase - $5</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <section id="photography" class="section"></section>
 
         <!-- Games Section -->
-        <section id="games" class="section">
-            <div class="section-content">
-                <h2 class="section-title">Interactive Games</h2>
-                <p class="section-subtitle">Classic games built with HTML5 Canvas</p>
-                
-                <div class="games-grid">
-                    <div class="game-card" id="snakeGame">
-                        <h3>Snake</h3>
-                        <canvas id="snakeCanvas" width="300" height="400"></canvas>
-                        <div class="game-info">
-                            <div class="score">Score: <span id="snakeScore">0</span></div>
-                            <button class="btn btn-primary" id="snakeStartBtn">Start Game</button>
-                            <p class="game-controls">Use arrow keys or WASD to play</p>
-                        </div>
-                    </div>
-                    
-                    <div class="game-card" id="tetrisGame">
-                        <h3>Tetris</h3>
-                        <canvas id="tetrisCanvas" width="300" height="400"></canvas>
-                        <div class="game-info">
-                            <div class="score">Score: <span id="tetrisScore">0</span></div>
-                            <button class="btn btn-primary" id="tetrisStartBtn">Start Game</button>
-                            <p class="game-controls">Use ← → keys to move, ↑ to rotate</p>
-                        </div>
-                    </div>
-
-                    <div class="game-card" id="breakoutGame">
-                        <h3>Breakout</h3>
-                        <canvas id="breakoutCanvas" width="300" height="400"></canvas>
-                        <div class="game-info">
-                            <div class="score">
-                                Score: <span id="breakoutScore">0</span> | 
-                                Lives: <span id="breakoutLives">3</span>
-                            </div>
-                            <button class="btn btn-primary" id="breakoutStartBtn">Start Game</button>
-                            <p class="game-controls">Use ← → arrow keys or A D to control paddle</p>
-                        </div>
-                    </div>
-                    
-                    <div class="game-card" id="pongGame">
-                        <h3>Pong</h3>
-                        <canvas id="pongCanvas" width="300" height="380"></canvas>
-                        <div class="game-info">
-                            <div class="score">
-                                Player: <span id="pongPlayerScore">0</span> | 
-                                AI: <span id="pongAiScore">0</span>
-                            </div>
-                            <button class="btn btn-primary" id="pongStartBtn">Start Game</button>
-                            <p class="game-controls">Use ↑ ↓ arrow keys to control paddle</p>
-                        </div>
-                    </div>
-                    
-                    
-                </div>
-            </div>
-        </section>
+        <section id="games" class="section"></section>
 
         <!-- Contact Section -->
-        <section id="contact" class="section">
-            <div class="section-content">
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="section-subtitle">Let's discuss your next project</p>
-                
-                    <form id="contactForm" action="contact.php" method="POST">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <div class="g-recaptcha" data-sitekey="6LfwV3ArAAAAAEw1Pha_M7CE7J4mRyOcEOwneNky"></div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </section>
+        <section id="contact" class="section"></section>
     </main>
 
     <!-- Photo Modal -->
@@ -360,6 +88,15 @@
         <span id="toastMessage"></span>
     </div>
 
+    <!-- Component files -->
+    <script src="js/components/home.js" defer></script>
+    <script src="js/components/resume.js" defer></script>
+    <script src="js/components/photography.js" defer></script>
+    <script src="js/components/games.js" defer></script>
+    <script src="js/components/contact.js" defer></script>
+    <script src="js/components/componentLoader.js" defer></script>
+
+    <!-- Core functionality files -->
     <script src="js/main.js" defer></script>
     <script src="js/navigation.js" defer></script>
     <script src="js/background.js" defer></script>
