@@ -747,36 +747,64 @@ function initializeBreakoutGame() {
     
     function checkBrickCollision() {
         const ball = gameState.ball;
-        
+
         for (let brick of gameState.bricks) {
             if (!brick.visible) continue;
-            
+
             if (ball.x < brick.x + brick.width &&
                 ball.x + ball.size > brick.x &&
                 ball.y < brick.y + brick.height &&
                 ball.y + ball.size > brick.y) {
-                
+
                 brick.visible = false;
                 gameState.score += 10;
                 scoreElement.textContent = gameState.score;
-                
+
                 // Determine collision side
                 const ballCenterX = ball.x + ball.size / 2;
                 const ballCenterY = ball.y + ball.size / 2;
                 const brickCenterX = brick.x + brick.width / 2;
                 const brickCenterY = brick.y + brick.height / 2;
-                
+
                 const dx = ballCenterX - brickCenterX;
                 const dy = ballCenterY - brickCenterY;
-                
+
                 if (Math.abs(dx / brick.width) > Math.abs(dy / brick.height)) {
                     ball.dx = -ball.dx;
                 } else {
                     ball.dy = -ball.dy;
                 }
-                
+
+                // Check if this was the last brick
+                checkLevelComplete();
+
                 break;
             }
+        }
+    }
+
+    function checkLevelComplete() {
+        const remainingBricks = gameState.bricks.filter(brick => brick.visible);
+        if (remainingBricks.length === 0 && gameState.gameRunning) {
+            // Advance to next level
+            gameState.level++;
+            gameState.speedMultiplier += 0.2; // Increase speed by 20% each level
+
+            // Reset bricks
+            gameState.bricks = initializeBricks();
+
+            // Reset ball with increased speed
+            const ball = gameState.ball;
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height - 50;
+            ball.dx = BALL_SPEED * gameState.speedMultiplier * (Math.random() > 0.5 ? 1 : -1);
+            ball.dy = -BALL_SPEED * gameState.speedMultiplier;
+
+            // Bonus points for completing level
+            gameState.score += 100;
+            scoreElement.textContent = gameState.score;
+
+            showToast('Level ' + gameState.level + ' Complete! Speed increased!');
         }
     }
     
@@ -841,30 +869,7 @@ function initializeBreakoutGame() {
             ball.dx = BALL_SPEED * gameState.speedMultiplier * (Math.random() > 0.5 ? 1 : -1);
             ball.dy = -BALL_SPEED * gameState.speedMultiplier;
         }
-        
-        // Check if all bricks are destroyed
-        const remainingBricks = gameState.bricks.filter(brick => brick.visible);
-        if (remainingBricks.length === 0) {
-            // Advance to next level
-            gameState.level++;
-            gameState.speedMultiplier += 0.2; // Increase speed by 20% each level
 
-            // Reset bricks
-            gameState.bricks = initializeBricks();
-
-            // Reset ball with increased speed
-            ball.x = canvas.width / 2;
-            ball.y = canvas.height - 50;
-            ball.dx = BALL_SPEED * gameState.speedMultiplier * (Math.random() > 0.5 ? 1 : -1);
-            ball.dy = -BALL_SPEED * gameState.speedMultiplier;
-
-            // Bonus points for completing level
-            gameState.score += 100;
-            scoreElement.textContent = gameState.score;
-
-            showToast('Level ' + gameState.level + ' Complete! Speed increased!');
-        }
-        
         drawGame();
     }
     

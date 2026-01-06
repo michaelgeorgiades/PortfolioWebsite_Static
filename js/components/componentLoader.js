@@ -42,6 +42,13 @@ function loadComponent(sectionId, renderFunction) {
             setTimeout(() => {
                 initializeContactForm();
             }, 0);
+        } else if (sectionId === 'photography') {
+            // Initialize image protection for photography section
+            setTimeout(() => {
+                if (typeof initializeImageProtection === 'function') {
+                    initializeImageProtection();
+                }
+            }, 0);
         }
     }
 }

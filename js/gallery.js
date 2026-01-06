@@ -16,13 +16,73 @@ let currentPhotoData = null;
 // Photo modal functionality
 function initializeModal() {
     const modal = document.getElementById('photoModal');
-    
+
     // Close modal when clicking outside
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             closePhotoModal();
         }
     });
+
+    // Add image protection after modal is initialized
+    initializeImageProtection();
+}
+
+// Image protection functionality
+function initializeImageProtection() {
+    // Protect all images in the photography section
+    const photographySection = document.getElementById('photography');
+    if (!photographySection) return;
+
+    const images = photographySection.querySelectorAll('img');
+
+    images.forEach(img => {
+        // Prevent right-click context menu
+        img.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            showToast('Image protection enabled. Please purchase to download.');
+            return false;
+        });
+
+        // Prevent dragging
+        img.addEventListener('dragstart', (e) => {
+            e.preventDefault();
+            return false;
+        });
+
+        // Make images non-selectable
+        img.style.userSelect = 'none';
+        img.style.webkitUserSelect = 'none';
+        img.style.mozUserSelect = 'none';
+        img.style.msUserSelect = 'none';
+
+        // Prevent touch-and-hold on mobile devices
+        img.style.webkitTouchCallout = 'none';
+
+        // Add pointer-events to prevent some workarounds
+        img.style.pointerEvents = 'auto';
+    });
+
+    // Also protect the modal image
+    const modalImage = document.getElementById('modalImage');
+    if (modalImage) {
+        modalImage.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            showToast('Image protection enabled. Please purchase to download.');
+            return false;
+        });
+
+        modalImage.addEventListener('dragstart', (e) => {
+            e.preventDefault();
+            return false;
+        });
+
+        modalImage.style.userSelect = 'none';
+        modalImage.style.webkitUserSelect = 'none';
+        modalImage.style.mozUserSelect = 'none';
+        modalImage.style.msUserSelect = 'none';
+        modalImage.style.webkitTouchCallout = 'none';
+    }
 }
 
 function openPhotoModal(photoId) {
@@ -79,3 +139,4 @@ function closePhotoModal() {
 
 window.openPhotoModal = openPhotoModal;
 window.closePhotoModal = closePhotoModal;
+window.initializeImageProtection = initializeImageProtection;
