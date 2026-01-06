@@ -30,9 +30,16 @@ function removeAllGameEventListeners() {
 // Snake Game
 function initializeSnakeGame() {
     const canvas = document.getElementById('snakeCanvas');
-    const ctx = canvas.getContext('2d');
     const startBtn = document.getElementById('snakeStartBtn');
     const scoreElement = document.getElementById('snakeScore');
+
+    // Check if elements exist
+    if (!canvas || !startBtn || !scoreElement) {
+        console.error('Snake game elements not found in DOM');
+        return;
+    }
+
+    const ctx = canvas.getContext('2d');
     
     const GRID_SIZE = 20;
     const GRID_WIDTH = canvas.width / GRID_SIZE;
@@ -198,9 +205,16 @@ function initializeSnakeGame() {
 // Tetris Game
 function initializeTetrisGame() {
     const canvas = document.getElementById('tetrisCanvas');
-    const ctx = canvas.getContext('2d');
     const startBtn = document.getElementById('tetrisStartBtn');
     const scoreElement = document.getElementById('tetrisScore');
+
+    // Check if elements exist
+    if (!canvas || !startBtn || !scoreElement) {
+        console.error('Tetris game elements not found in DOM');
+        return;
+    }
+
+    const ctx = canvas.getContext('2d');
     
     const BLOCK_SIZE = 30;
     const COLS = Math.floor(canvas.width / BLOCK_SIZE);
@@ -459,10 +473,17 @@ function initializeTetrisGame() {
 // Pong Game
 function initializePongGame() {
     const canvas = document.getElementById('pongCanvas');
-    const ctx = canvas.getContext('2d');
     const startBtn = document.getElementById('pongStartBtn');
     const playerScoreElement = document.getElementById('pongPlayerScore');
     const aiScoreElement = document.getElementById('pongAiScore');
+
+    // Check if elements exist
+    if (!canvas || !startBtn || !playerScoreElement || !aiScoreElement) {
+        console.error('Pong game elements not found in DOM');
+        return;
+    }
+
+    const ctx = canvas.getContext('2d');
     
     const PADDLE_WIDTH = 10;
     const PADDLE_HEIGHT = 80;
@@ -640,10 +661,17 @@ function initializePongGame() {
 // Breakout Game
 function initializeBreakoutGame() {
     const canvas = document.getElementById('breakoutCanvas');
-    const ctx = canvas.getContext('2d');
     const startBtn = document.getElementById('breakoutStartBtn');
     const scoreElement = document.getElementById('breakoutScore');
     const livesElement = document.getElementById('breakoutLives');
+
+    // Check if elements exist
+    if (!canvas || !startBtn || !scoreElement || !livesElement) {
+        console.error('Breakout game elements not found in DOM');
+        return;
+    }
+
+    const ctx = canvas.getContext('2d');
     
     const PADDLE_WIDTH = 75;
     const PADDLE_HEIGHT = 10;
@@ -810,8 +838,10 @@ function initializeBreakoutGame() {
         // Check if all bricks are destroyed
         const remainingBricks = gameState.bricks.filter(brick => brick.visible);
         if (remainingBricks.length === 0) {
-            gameState.bricks = initializeBricks();
-            showToast('Level Complete!');
+            gameState.gameRunning = false;
+            clearInterval(gameLoop);
+            startBtn.textContent = 'Start Game';
+            showToast('Congratulations! You Win! Final Score: ' + gameState.score);
         }
         
         drawGame();

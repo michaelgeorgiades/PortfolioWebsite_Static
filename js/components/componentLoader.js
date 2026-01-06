@@ -32,10 +32,16 @@ function loadComponent(sectionId, renderFunction) {
         // Re-initialize specific functionality after component loads
         if (sectionId === 'games') {
             // Initialize games after the canvas elements are in the DOM
-            initializeGames();
+            // Use setTimeout to ensure the DOM has fully updated
+            setTimeout(() => {
+                console.log('Initializing games...');
+                initializeGames();
+            }, 0);
         } else if (sectionId === 'contact') {
             // Initialize contact form after the form elements are in the DOM
-            initializeContactForm();
+            setTimeout(() => {
+                initializeContactForm();
+            }, 0);
         }
     }
 }
