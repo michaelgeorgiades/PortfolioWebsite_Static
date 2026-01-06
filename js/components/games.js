@@ -32,7 +32,11 @@ function renderGamesSection() {
                     <div class="game-info">
                         <div class="score">
                             Score: <span id="breakoutScore">0</span> |
-                            Lives: <span id="breakoutLives">3</span>
+                            Lives: <span id="breakoutLives">3</span> |
+                            Bricks: <span id="breakoutBricks">25</span>
+                        </div>
+                        <div class="score" style="margin-top: 0.5rem;">
+                            Level: <span id="breakoutLevel">1</span>
                         </div>
                         <button class="btn btn-primary" id="breakoutStartBtn">Start Game</button>
                         <p class="game-controls">Use ← → arrow keys or A D to control paddle</p>

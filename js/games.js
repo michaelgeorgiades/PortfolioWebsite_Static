@@ -669,6 +669,8 @@ function initializeBreakoutGame() {
     const startBtn = document.getElementById('breakoutStartBtn');
     const scoreElement = document.getElementById('breakoutScore');
     const livesElement = document.getElementById('breakoutLives');
+    const bricksElement = document.getElementById('breakoutBricks');
+    const levelElement = document.getElementById('breakoutLevel');
 
     // Check if elements exist
     if (!canvas || !startBtn || !scoreElement || !livesElement) {
@@ -684,7 +686,7 @@ function initializeBreakoutGame() {
     const PADDLE_SPEED = 7;
     const BALL_SPEED = 4;
     const BRICK_ROWS = 5;
-    const BRICK_COLS = 8;
+    const BRICK_COLS = 5;  // Changed from 8 to 5 to fit 300px canvas width
     const BRICK_WIDTH = 55;
     const BRICK_HEIGHT = 20;
     const BRICK_PADDING = 5;
@@ -762,6 +764,12 @@ function initializeBreakoutGame() {
 
                 // Count remaining bricks
                 const remainingCount = gameState.bricks.filter(b => b.visible).length;
+
+                // Update UI
+                if (bricksElement) {
+                    bricksElement.textContent = remainingCount;
+                }
+
                 console.log('Brick destroyed! Remaining bricks:', remainingCount);
 
                 // Determine collision side
@@ -779,10 +787,18 @@ function initializeBreakoutGame() {
                     ball.dy = -ball.dy;
                 }
 
-                // Check if this was the last brick
+                // Check if this was the last brick - IMMEDIATELY
                 if (remainingCount === 0) {
                     console.log('Last brick destroyed! Advancing to next level...');
-                    checkLevelComplete();
+                    // Pause game briefly to transition to next level
+                    gameState.gameRunning = false;
+                    clearInterval(gameLoop);
+                    setTimeout(() => {
+                        checkLevelComplete();
+                        // Restart game loop
+                        gameLoop = setInterval(updateGame, 16);
+                        gameState.gameRunning = true;
+                    }, 500); // Half second pause
                 }
 
                 break;
@@ -791,11 +807,6 @@ function initializeBreakoutGame() {
     }
 
     function checkLevelComplete() {
-        if (!gameState.gameRunning) {
-            console.log('Game not running, skipping level complete');
-            return;
-        }
-
         console.log('Level complete! Current level:', gameState.level, 'Speed multiplier:', gameState.speedMultiplier);
 
         // Advance to next level
@@ -805,6 +816,14 @@ function initializeBreakoutGame() {
         // Reset bricks
         gameState.bricks = initializeBricks();
         console.log('New bricks created:', gameState.bricks.length);
+
+        // Update UI
+        if (bricksElement) {
+            bricksElement.textContent = gameState.bricks.length;
+        }
+        if (levelElement) {
+            levelElement.textContent = gameState.level;
+        }
 
         // Reset ball with increased speed
         const ball = gameState.ball;
@@ -840,26 +859,40 @@ function initializeBreakoutGame() {
         // Ball collision with walls
         if (gameState.ball.x <= gameState.ball.size || gameState.ball.x >= canvas.width - gameState.ball.size) {
             gameState.ball.dx = -gameState.ball.dx;
+            // Ensure ball has minimum horizontal velocity to prevent getting stuck
+            const minSpeed = BALL_SPEED * gameState.speedMultiplier * 0.3;
+            if (Math.abs(gameState.ball.dx) < minSpeed) {
+                gameState.ball.dx = gameState.ball.dx > 0 ? minSpeed : -minSpeed;
+            }
         }
-        
+
         if (gameState.ball.y <= gameState.ball.size) {
             gameState.ball.dy = -gameState.ball.dy;
         }
-        
+
         // Ball collision with paddle
         const ball = gameState.ball;
         const paddle = gameState.paddle;
-        
+
         if (ball.y + ball.size >= paddle.y &&
             ball.y - ball.size <= paddle.y + paddle.height &&
             ball.x >= paddle.x &&
             ball.x <= paddle.x + paddle.width) {
-            
+
             ball.dy = -Math.abs(ball.dy);
 
             // Add angle based on where ball hit paddle
+            // Ensure there's always some horizontal velocity
             const hitPos = (ball.x - paddle.x) / paddle.width;
-            ball.dx = (hitPos - 0.5) * BALL_SPEED * gameState.speedMultiplier * 2;
+            const horizontalVelocity = (hitPos - 0.5) * BALL_SPEED * gameState.speedMultiplier * 2;
+
+            // Minimum horizontal speed to prevent vertical-only movement
+            const minHorizontalSpeed = BALL_SPEED * gameState.speedMultiplier * 0.3;
+            if (Math.abs(horizontalVelocity) < minHorizontalSpeed) {
+                ball.dx = hitPos < 0.5 ? -minHorizontalSpeed : minHorizontalSpeed;
+            } else {
+                ball.dx = horizontalVelocity;
+            }
         }
         
         // Check brick collisions
@@ -906,6 +939,12 @@ function initializeBreakoutGame() {
 
         scoreElement.textContent = '0';
         livesElement.textContent = '3';
+        if (bricksElement) {
+            bricksElement.textContent = gameState.bricks.length;
+        }
+        if (levelElement) {
+            levelElement.textContent = '1';
+        }
         drawGame();
 
         gameLoop = setInterval(updateGame, 16);
